@@ -40,7 +40,7 @@ export default function LineChart({ height, width, focusYear }) {
     <svg height={height} width={width}>
       {years.map((year) => {
         if (year != focusYear) {
-          return <YearLine key={year} d={line(filterDataForYear(data, year))} opacity={0.2  } inFocus={false} />;
+          return <YearLine key={year} year={year} d={line(filterDataForYear(data, year))} opacity={0.2  } inFocus={false} />;
         }
       })}
       {xScale.ticks(12).map((month) => (
@@ -59,7 +59,7 @@ export default function LineChart({ height, width, focusYear }) {
           </text>
         </g>
       ))} */}
-      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} opacity={1} inFocus={true} />
+      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} year={focusYear} opacity={1} inFocus={true} />
     </svg>
   );
 }

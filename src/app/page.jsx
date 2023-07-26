@@ -76,8 +76,8 @@ export default function Page() {
 
   return (
     <>
-      <CustomSlider label="Year" defaultValue={2010} min={1992} max={2015} onChangeCommitted={onYearSlideCommit}/>
-      <CustomSlider label="Month" defaultValue={1} min={1} max={12} onChangeCommitted={onMonthSliderCommit}/>
+      <CustomSlider color="red" label="Year" defaultValue={2010} min={1992} max={2015} onChangeCommitted={onYearSlideCommit}/>
+      <CustomSlider color="palette.secondary.main" label="Month" defaultValue={1} min={1} max={12} onChangeCommitted={onMonthSliderCommit}/>
       <div>
       {isCountySelected && <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
             which is equivilant to {fireSentence}</h2>}
