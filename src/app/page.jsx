@@ -6,13 +6,14 @@ import countiesUs from "@/data/counties-10m.json";
 import wildfire2016 from "@/data/FiresPerCountyMonthly.json";
 import County from "@/components/county";
 import LineChart from "@/components/lineChart";
-import Slider from '@mui/material/Slider';
+import CustomSlider from "@/components/slider";
 
 export default function Page() {
   const usData = countiesUs;
   const [focusCounty, setFocusCounty] = useState(null);
   const [fireSentence, setFireSentence] = useState("");
   const [fireTotal, setFireTotal] = useState();
+  const [yearSlider, setYearSlider] = useState(2010)
   const [month, setMonth] = useState("07");
   const [year, setYear] = useState("2010");
   const [countiesWithWildfireMap, setSountiesWithWildfireMap] = useState([]);
@@ -54,8 +55,7 @@ export default function Page() {
     console.log(county);
   }
 
-  function onMonthSliderChange(event) {
-    const value = event.target.value;
+  function onMonthSliderCommit(value) {
     if (value < 10) {
       setMonth("0" + value);
     } else {
@@ -63,26 +63,15 @@ export default function Page() {
     }
   }
 
-  function onYearSliderChange(event) {
-    const value = event.target.value;
+  function onYearSlideCommit(value) {
     setYear(value + "")
   }
 
 
   return (
     <>
-      <div className="w-72 p-8 flex flex-row space-y-4">
-        <h1>Year</h1>
-        <Slider
-          size="small"
-          getAriaLabel={() => 'Temperature range'}
-          onChange={onYearSliderChange}
-          valueLabelDisplay="auto"
-          defaultValue={2010}
-          min={1992}
-          max={2015}
-        />
-      </div>
+      <CustomSlider label="Year" defaultValue={2010} min={1992} max={2015} onChangeCommitted={onYearSlideCommit}/>
+      <CustomSlider label="Month" defaultValue={1} min={1} max={12} onChangeCommitted={onMonthSliderCommit}/>
       <div>
         <h1>State: {focusCounty ? focusCounty : ""}</h1>
         <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
