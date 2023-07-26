@@ -17,6 +17,7 @@ export default function Page() {
   const [month, setMonth] = useState("07");
   const [year, setYear] = useState("2010");
   const [countiesWithWildfireMap, setSountiesWithWildfireMap] = useState([]);
+  const [isCountySelected, setIsCountySelected] = useState(false);
 
   useEffect(() => {
     const counties = feature(usData, usData.objects.counties);
@@ -54,7 +55,7 @@ export default function Page() {
     setFocusCounty(county.properties.name);
     setFireSentence(getFireSentence(county.fireSize))
     setFireTotal(Math.round(county.fireSize*100)/100);
-    console.log(county);
+    setIsCountySelected(true);
   }
 
   function onMonthSliderCommit(value) {
@@ -63,10 +64,13 @@ export default function Page() {
     } else {
       setMonth(value);
     }
+    setIsCountySelected(false)
   }
 
   function onYearSlideCommit(value) {
     setYear(value + "")
+    setIsCountySelected(false)
+
   }
 
 
@@ -75,9 +79,8 @@ export default function Page() {
       <CustomSlider label="Year" defaultValue={2010} min={1992} max={2015} onChangeCommitted={onYearSlideCommit}/>
       <CustomSlider label="Month" defaultValue={1} min={1} max={12} onChangeCommitted={onMonthSliderCommit}/>
       <div>
-        <h1>State: {focusCounty ? focusCounty : ""}</h1>
-        <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
-            which is equivilant to {fireSentence}</h2>
+      {isCountySelected && <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
+            which is equivilant to {fireSentence}</h2>}
       </div>
       <svg height={500} width={1000}>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
