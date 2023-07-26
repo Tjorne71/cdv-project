@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion"
 
-export default function County({ d, county, color, countyClicked}) {
+export default function County({ d, county, color, countyClicked, fireSize}) {
   const [hover, setHover] = useState(false);
   const [currentColor, setCurrentColor] = useState(color);
 
@@ -25,7 +25,7 @@ export default function County({ d, county, color, countyClicked}) {
           setHover(true);
         }}
         onClick={() => {
-          countyClicked(county);
+          countyClicked(county, fireSize);
         }}
         animate={{ 
           fill: currentColor,
