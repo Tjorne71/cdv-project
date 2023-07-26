@@ -12,7 +12,7 @@ export default function Visual() {
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
 
-  function onMonthSliderCommit(value) {
+  function onMonthChange(value) {
     setFocusMonth(value);
   }
 
@@ -26,8 +26,8 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthSliderCommit} />
-          <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthSliderCommit} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
+          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
+          <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
         </div>
       </div>
       <div className="text-2xl p-8 bg-[#3D5E70] flex flex-col h-auto w-3/7">
@@ -45,7 +45,7 @@ export default function Visual() {
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
+          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
         </div>
       </div>
     </div>
