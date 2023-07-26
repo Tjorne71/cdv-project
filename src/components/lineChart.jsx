@@ -5,7 +5,7 @@ import YearLine from "@/components/yearLine";
 import { motion } from "framer-motion";
 import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
 
-export default function LineChart({ height, width, focusYear, focusMonth }) {
+export default function LineChart({ height, width, focusYear, focusMonth, onYearClicked, onMonthClick }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
   const margin = { top: 20, right: 40, bottom: 20, left: 40 };
   const data = wildfireData.map((fire) => {
@@ -34,28 +34,31 @@ export default function LineChart({ height, width, focusYear, focusMonth }) {
     <svg height={height} width={width}>
       {years.map((year) => {
         if (year != focusYear) {
-          return <YearLine key={year} year={year} d={line(filterDataForYear(data, year))} opacity={0.2} inFocus={false} />;
+          return (
+            <YearLine
+              key={year}
+              year={year}
+              d={line(filterDataForYear(data, year))}
+              opacity={0.2}
+              inFocus={false}
+              onLineClick={(year) => {
+                onYearClicked(year);
+              }}
+            />
+          );
         }
       })}
       {xScale.ticks(12).map((month) => {
-        const isFocusMonth = month == parseInt(focusMonth)
+        const isFocusMonth = month == parseInt(focusMonth);
         return (
           <g key={month} transform={`translate(${xScale(month)}, 0)`}>
-            <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="white" className={`text-[8px] transition-all ease-in-out duration-100 uppercase ${isFocusMonth ? 'font-bold' : 'font-thin'}`} alignmentBaseline="middle">
+            <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="white" className={`text-[8px] cursor-pointer hover:font-bold transition-all ease-in-out duration-100 uppercase ${isFocusMonth ? "font-bold" : "font-thin"}`} alignmentBaseline="middle" onClick={() => {onMonthClick(month)}}>
               {format(new Date(2000, month - 1, 1), "MMMM")}
             </text>
           </g>
         );
       })}
-      {/* {yScale.ticks(5).map((Fire_Size) => (
-        <g key={Fire_Size} transform={`translate(0,${yScale(Fire_Size)})`}>
-          <line x1={margin.left} x2={width - margin.right} stroke="currentColor" strokeDasharray="1,3" />
-          <text alignmentBaseline="middle" className="text-[10px]" fill="currentColor">
-            {Fire_Size}
-          </text>
-        </g>
-      ))} */}
-      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} year={focusYear} opacity={1} inFocus={true} />
+      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} year={focusYear} opacity={1} inFocus={true} onLineClick={() => {}} />
     </svg>
   );
 }

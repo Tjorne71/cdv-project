@@ -5,23 +5,19 @@ import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
 
 export default function Visual() {
-  const [focusMonth, setFocusMonth] = useState("07");
-  const [focusYear, setFocusYear] = useState("2010");
+  const [focusMonth, setFocusMonth] = useState(7);
+  const [focusYear, setFocusYear] = useState(2010);
   const [focusCounty, setFocusCounty] = useState("Los Angeles");
   const [fireSentence, setFireSentence] = useState("Virgin Islands");
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
 
   function onMonthSliderCommit(value) {
-    if (value < 10) {
-      setFocusMonth("0" + value);
-    } else {
-      setFocusMonth(value);
-    }
+    setFocusMonth(value);
   }
 
-  function onYearSlideCommit(value) {
-    setFocusYear(value + "");
+  function onYearChange(value) {
+    setFocusYear(value);
   }
   return (
     <div className="h-[900px] w-[90%] font-Montserrat text-white flex flex-row mx-auto">
@@ -30,8 +26,8 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth}/>
-          <CustomSlider label={null} width={720} defaultValue={7} onChangeCommitted={onMonthSliderCommit} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible}/>
+          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthSliderCommit} />
+          <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthSliderCommit} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
         </div>
       </div>
       <div className="text-2xl p-8 bg-[#3D5E70] flex flex-col h-auto w-1/3">
@@ -41,20 +37,24 @@ export default function Visual() {
         </div>
         <hr className="mb-4 h-[2px] bg-white"></hr>
         <p className="pr-4 mb-4">
-          Discover the evolving history of US wildfires and the pressing question: <br/>
-          <br/><b>How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?</b> <br/><br/>Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. 
-          Join us on a quest for understanding and action to protect our landscapes from this growing threat.
+          Discover the evolving history of US wildfires and the pressing question: <br />
+          <br />
+          <b>
+            How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?
+          </b>{" "}
+          <br />
+          <br />
+          Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. Join us on a quest for understanding and action to protect our landscapes from this growing threat.
         </p>
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-8 bg-[#3b5665] p-3">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Year: ${focusYear}`} defaultValue={2010} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
+          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} />
         </div>
       </div>
     </div>
   );
 }
-
 
 function numericMonthToMonthName(numericMonth) {
   const dateObj = new Date(`2023-${numericMonth}-01`);
@@ -62,8 +62,8 @@ function numericMonthToMonthName(numericMonth) {
   return monthName;
 }
 
-function generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence){
-  if(fireTotal < 0.05) return `${focusCounty} county hasn't had any wildfires during ${numericMonthToMonthName(focusMonth)} ${focusYear}.`;
+function generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) {
+  if (fireTotal < 0.05) return `${focusCounty} county hasn't had any wildfires during ${numericMonthToMonthName(focusMonth)} ${focusYear}.`;
   const sentences = [
     `In ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county had a fire that spread ${fireTotal} acres, which is equivalent to ${fireSentence}.`,
     `Back in ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county experienced a fire that extended over ${fireTotal} acres, equivalent to the size of ${fireSentence}.`,

@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 
-export default function CustomSlider({ label, defaultValue, onChangeCommitted, min, max, width, setIsSentenceVisible}) {
-  const [sliderValue, setSliderValue] = useState(defaultValue)
+export default function CustomSlider({ label, onChangeCommitted, min, max, width, setIsSentenceVisible, value}) {
+  const [sliderValue, setSliderValue] = useState(value)
 
   function onSliderChange(event) {
     const value = event.target.value;
@@ -18,7 +18,8 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
         getAriaLabel={() => "Slider"} 
         onChange={onSliderChange} 
         onChangeCommitted={() => onChangeCommitted(sliderValue)} 
-        defaultValue={defaultValue} 
+        defaultValue={value} 
+        value={value}
         min={min} 
         max={max}
         marks={true}

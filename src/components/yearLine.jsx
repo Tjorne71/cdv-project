@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function YearLine({ d, year, opacity, inFocus }) {
+export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
   const [hover, setHover] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -39,6 +39,8 @@ export default function YearLine({ d, year, opacity, inFocus }) {
         onMouseEnter={() => {
           setHover(true);
         }}
+        onClick={() => {onLineClick(year)}}
+        className={"cursor-pointer"}
       />
       {/* Tooltip */}
       {hover && (
