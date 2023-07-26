@@ -10,9 +10,21 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
     setSliderValue(value)
   }
   return (
-    <div className="w-72 p-8 flex flex-row space-y-4">
-      <h1>{label}</h1>
-      <Slider size="small" getAriaLabel={() => "Slider"} onChange={onSliderChange} onChangeCommitted={() => onChangeCommitted(sliderValue)} valueLabelDisplay="auto" defaultValue={defaultValue} min={min} max={max} />
+    <div className="w-72 p-2 flex flex-col">
+      <h1 className="font-Montserrat">{label}</h1>
+      <Slider 
+        size="small" 
+        getAriaLabel={() => "Slider"} 
+        onChange={onSliderChange} 
+        onChangeCommitted={() => onChangeCommitted(sliderValue)} 
+        valueLabelDisplay="auto" 
+        defaultValue={defaultValue} 
+        min={min} 
+        max={max}
+        sx={{
+          color: '#F9F871',
+        }}
+      />
     </div>
   );
 }

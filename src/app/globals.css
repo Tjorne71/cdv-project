@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Montserrat"; /* Choose a suitable name for your font */
+  src: url("../../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype"); /* Adjust the path to your font file */
+  /* Add other formats if your font supports them (e.g., woff, woff2, etc.) */
+  /* You can use multiple src declarations to provide different file formats */
+}
