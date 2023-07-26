@@ -26,7 +26,7 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <LineChart height={250} width={800} focusYear={focusYear} />
+          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth}/>
           <CustomSlider label={null} width={740} defaultValue={6} onChangeCommitted={onMonthSliderCommit} min={1} max={12} />
         </div>
       </div>

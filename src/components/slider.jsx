@@ -17,10 +17,10 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
         getAriaLabel={() => "Slider"} 
         onChange={onSliderChange} 
         onChangeCommitted={() => onChangeCommitted(sliderValue)} 
-        valueLabelDisplay="auto" 
         defaultValue={defaultValue} 
         min={min} 
         max={max}
+        marks={true}
         sx={{
           color: '#F9F871',
         }}
