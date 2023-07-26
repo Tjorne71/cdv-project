@@ -10,7 +10,7 @@ export default function Visual() {
   const [focusCounty, setFocusCounty] = useState("Los Angeles");
   const [fireSentence, setFireSentence] = useState("Virgin Islands");
   const [fireTotal, setFireTotal] = useState(14705.8);
-  const [isSentenceVisible, setIsSentenceVisible] = useState(true);
+  const [isSentenceVisible, setIsSentenceVisible] = useState(false);
 
   function onMonthSliderCommit(value) {
     if (value < 10) {
@@ -45,9 +45,9 @@ export default function Visual() {
           <br/><b>How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?</b> <br/><br/>Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. 
           Join us on a quest for understanding and action to protect our landscapes from this growing threat.
         </p>
-        <hr className="mb-4 h-[2px] bg-white"></hr>
-        <h2>{isSentenceVisible && generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence)}</h2>
+        <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
+          <h2 className="mb-8">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
           <CustomSlider label={`Selected Year: ${focusYear}`} defaultValue={2010} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
         </div>
       </div>
@@ -63,7 +63,7 @@ function numericMonthToMonthName(numericMonth) {
 }
 
 function generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence){
-  if(fireTotal < 0.05) return "";
+  if(fireTotal < 0.05) return `${focusCounty} county hasn't had any wildfires during ${numericMonthToMonthName(focusMonth)} ${focusYear}.`;
   const sentences = [
     `In ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county had a fire that spread ${fireTotal} acres, which is equivalent to ${fireSentence}.`,
     `Back in ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county experienced a fire that extended over ${fireTotal} acres, equivalent to the size of ${fireSentence}.`,
