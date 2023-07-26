@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import { mesh, feature } from "topojson-client";
 import countiesUs from "@/data/counties-10m.json";
-import wildfire2016 from "@/data/FiresPerYear.json";
+import wildfire2016 from "@/data/FiresPerCountyMonthly.json";
 import County from "@/components/county";
 import LineChart from "@/components/lineChart";
 import Slider from '@mui/material/Slider';
