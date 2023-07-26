@@ -6,6 +6,7 @@ import countiesUs from "@/data/counties-10m.json";
 import wildfire2016 from "@/data/FiresPerYear.json";
 import County from "@/components/county";
 import LineChart from "@/components/lineChart";
+import Slider from '@mui/material/Slider';
 
 export default function Page() {
   const usData = countiesUs;
@@ -21,25 +22,28 @@ export default function Page() {
     const wildfireData = wildfire2016;
     var map = new Map();
     for (let i = 1992; i <= 2015; i++) {
-      const yearString = i.toString();
-      const key = yearString;
-      const fires = wildfireData.filter((fire) => fire.Year == yearString);
-      map = map.set(
-        key,
-        counties.features.map((county) => {
-          const fire = fires.find((fire) => fire.County_Id == county.id);
-          return { ...county, fireSize: fire ? fire.Fire_Size : 0 };
-        }).sort((a,b) => a.fireSize - b.fireSize)
-      );
+      for (let c = 1; c <= 12; c++) {
+        const yearString = i.toString();
+        const monthString = c < 10 ? "0" + c : "" + c;
+        const key = yearString + monthString;
+        const fires = wildfireData.filter((fire) => fire.Year == yearString && fire.Month == monthString);
+        map = map.set(
+          key,
+          counties.features.map((county) => {
+            const fire = fires.find((fire) => fire.County_Id == county.id);
+            return { ...county, fireSize: fire ? fire.Fire_Size : 0 };
+          })
+        );
+      }
     }
     setSountiesWithWildfireMap(map);
   }, [usData]);
   if (countiesWithWildfireMap.length == 0) {
     return <>Loading..</>;
   }
-  const projection = d3.geoAlbersUsa().scale(900);
+  const projection = d3.geoAlbersUsa().scale(800);
   const geoPath = d3.geoPath().projection(projection);
-  const currentWildFireData = countiesWithWildfireMap.get(year);
+  const currentWildFireData = countiesWithWildfireMap.get(year + month);
   const usStatesPath = geoPath(mesh(usData, usData.objects.states, (a, b) => a !== b));
   const max = parseInt(currentWildFireData.at(-1).fireSize)
   const reds = d3.scaleOrdinal(d3.schemeReds);
@@ -51,18 +55,41 @@ export default function Page() {
     console.log(county);
   }
 
+  function onMonthSliderChange(event) {
+    const value = event.target.value;
+    if (value < 10) {
+      setMonth("0" + value);
+    } else {
+      setMonth(value);
+    }
+  }
+
+  function onYearSliderChange(event) {
+    const value = event.target.value;
+    setYear(value + "")
+  }
+
+
   return (
     <>
-      <div>
-        <h1>Year: {year}</h1>
-        <input type="range" min="1992" max="2015" onChange={(event) => setYear(event.target.value)} />
+      <div className="w-72 p-8 flex flex-row space-y-4">
+        <h1>Year</h1>
+        <Slider
+          size="small"
+          getAriaLabel={() => 'Temperature range'}
+          onChange={onYearSliderChange}
+          valueLabelDisplay="auto"
+          defaultValue={2010}
+          min={1992}
+          max={2015}
+        />
       </div>
       <div>
         <h1>State: {focusCounty ? focusCounty : ""}</h1>
         <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
             which is equivilant to {fireSentence}</h2>
       </div>
-      <svg viewBox="0 0 975 610">
+      <svg height={500} width={1000}>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
           {currentWildFireData.map((county) => {
             const color = county.fireSize == 0 ? "#fff5f0" : reds(getFireValue(parseInt(county.fireSize)));
@@ -73,7 +100,7 @@ export default function Page() {
           <path stroke="black" strokeWidth="0.6" d={usStatesPath}></path>
         </g>
       </svg>
-      LineChart
+      <LineChart height={300} width={1000} focusYear={parseInt(year)}/>
     </>
   );
 }
