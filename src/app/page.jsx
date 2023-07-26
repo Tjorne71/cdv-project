@@ -9,9 +9,12 @@ import County from "@/components/county";
 export default function Page() {
   const usData = countiesUs;
   const [focusCounty, setFocusCounty] = useState(null);
+  const [fireSentence, setFireSentence] = useState("");
+  const [fireTotal, setFireTotal] = useState();
   const [month, setMonth] = useState("07");
   const [year, setYear] = useState("2010");
   const [countiesWithWildfireMap, setSountiesWithWildfireMap] = useState([]);
+
   useEffect(() => {
     const counties = feature(usData, usData.objects.counties);
     const wildfireData = wildfire2016;
@@ -43,7 +46,10 @@ export default function Page() {
   const reds = d3.scaleOrdinal(d3.schemeReds[8]);
 
   function countyClicked(county) {
-    setFocusCounty(`${county.id} ${county.properties.name}`);
+    setFocusCounty(county.properties.name);
+    setFireSentence(getFireSentence(county.fireSize))
+    setFireTotal(Math.round(county.fireSize*100)/100);
+    console.log(county);
   }
 
 
@@ -72,12 +78,16 @@ export default function Page() {
       </div>
       <div>
         <h1>State: {focusCounty ? focusCounty : ""}</h1>
+        <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
+            which is equivilant to {fireSentence}</h2>
       </div>
       <svg viewBox="0 0 975 610">
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
           {currentWildFireData.map((county) => {
             const color = county.fireSize == 0 ? "#fff5f0" : reds(getFireValue(parseInt(county.fireSize)));
-            return <County key={county.id} color={color} d={geoPath(county)} county={county} countyClicked={countyClicked} />;
+            return (
+              <County key={county.id} color={color} d={geoPath(county)} county={county} countyClicked={countyClicked} />
+            );
           })}
           <path stroke="black" strokeWidth="0.6" d={usStatesPath}></path>
         </g>
@@ -86,6 +96,96 @@ export default function Page() {
   );
 }
 
+function numericMonthToMonthName(numericMonth) {
+  const dateObj = new Date(`2023-${numericMonth}-01`);
+  const monthName = dateObj.toLocaleString('en-US', { month: 'long' });
+  return monthName;
+}
+
+function getFireSentence(fire_total) {
+  let sentence;
+  switch (true) {
+    case fire_total > 0 && fire_total <= 0.25:
+      sentence = "a basketball court."
+      break;
+    case fire_total >= 0.26 && fire_total <= 0.50:
+      sentence = "two basketball courts.";
+      break;
+    case fire_total >= 0.5 && fire_total <= 1:
+      sentence = "a soccer field."
+      break;
+    case fire_total >= 1 && fire_total <= 2:
+      sentence = "a football field."
+      break;
+    case fire_total >= 2 && fire_total <= 4:
+      sentence = "two football fields."
+      break;
+    case fire_total >= 4 && fire_total <= 8:
+      sentence = "a Wallmart Supercenter."
+      break;
+    case fire_total >= 8 && fire_total <= 16:
+      sentence = "two 18 hole golf courses."
+      break;
+    case fire_total >= 16 && fire_total <= 32:
+      sentence = "Ellis Island."
+      break;
+    case fire_total >= 32 && fire_total <= 64:
+      sentence = "The White House."
+      break;
+    case fire_total >= 64 && fire_total <= 128:
+      sentence = "five 18 hole golf courses."
+      break;
+    case fire_total >= 128 && fire_total <= 256:
+      sentence = "Venice Beach."
+      break;
+    case fire_total >= 256 && fire_total <= 512:
+      sentence = "Disney World."
+      break;
+    case fire_total >= 512 && fire_total <= 1024:
+      sentence = "Central Park."
+      break;
+    case fire_total >= 1024 && fire_total <= 2048:
+      sentence = "Tesla Gigefactory, Texas."
+      break;
+    case fire_total >= 2048 && fire_total <= 4096:
+      sentence = "Two Tesla Gigefactories."
+      break;
+    case fire_total >= 2048 && fire_total <= 4096:
+      sentence = "the hot springs in Arkansas."
+      break;
+    case fire_total >= 4096 && fire_total <= 8192:
+      sentence = "The Bronx."
+      break;
+    case fire_total >= 8192 && fire_total <= 16384:
+      sentence = "Virgin Islands."
+      break;
+    case fire_total >= 16384 && fire_total <= 32768:
+      sentence = "Haleakala, Hawaii."
+      break;
+    case fire_total >= 32768 && fire_total <= 65536:
+      sentence = "Bryce Canyon, Utah."
+      break;
+    case fire_total >= 65536 && fire_total <= 131072:
+      sentence = "Great Sand Dunes, Colorado."
+      break;
+    case fire_total >= 131072 && fire_total <= 262144:
+      sentence = "New York City."
+      break;
+    case fire_total >= 262144 && fire_total <= 524288:
+      sentence = "Rocky Mountain, Colorado."
+      break;
+    case fire_total >= 524288 && fire_total <= 1048576:
+      sentence = "Rhodes Island."
+      break;
+    case fire_total >= 1048576:
+      sentence = "Grand Canyon."
+      break;
+    default:
+      sentence = "";
+  }
+
+  return sentence;
+}
 
 function getFireValue(fire_total) {
   let letter;
@@ -118,3 +218,4 @@ function getFireValue(fire_total) {
 
   return letter;
 }
+
