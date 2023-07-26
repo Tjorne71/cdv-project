@@ -45,7 +45,9 @@ export default function Page() {
   const geoPath = d3.geoPath().projection(projection);
   const currentWildFireData = countiesWithWildfireMap.get(year + month);
   const usStatesPath = geoPath(mesh(usData, usData.objects.states, (a, b) => a !== b));
-  const reds = d3.scaleOrdinal(d3.schemeReds[8]);
+  const reds = d3.scaleSequential()
+  .domain([1, 8])
+  .interpolator(d3.interpolateReds);
 
   function countyClicked(county) {
     setFocusCounty(county.properties.name);
