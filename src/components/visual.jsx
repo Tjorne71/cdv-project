@@ -63,6 +63,7 @@ function numericMonthToMonthName(numericMonth) {
 }
 
 function generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence){
+  if(fireTotal < 0.05) return "";
   const sentences = [
     `In ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county had a fire that spread ${fireTotal} acres, which is equivalent to ${fireSentence}.`,
     `Back in ${numericMonthToMonthName(focusMonth)} ${focusYear}, ${focusCounty} county experienced a fire that extended over ${fireTotal} acres, equivalent to the size of ${fireSentence}.`,
