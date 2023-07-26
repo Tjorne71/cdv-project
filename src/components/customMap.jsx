@@ -7,8 +7,11 @@ import wildfire2016 from "@/data/FiresPerCountyMonthly.json";
 import County from "@/components/county";
 import LineChart from "@/components/lineChart";
 
-export default function CustomMap({focusYear, focusMonth}) {
+export default function CustomMap({focusYear, focusMonth, height, width}) {
     const usData = countiesUs;
+    const [focusCounty, setFocusCounty] = useState(null);
+    const [fireSentence, setFireSentence] = useState("");
+    const [fireTotal, setFireTotal] = useState();
     const [countiesWithWildfireMap, setSountiesWithWildfireMap] = useState([]);
   
     useEffect(() => {
@@ -35,7 +38,7 @@ export default function CustomMap({focusYear, focusMonth}) {
     if (countiesWithWildfireMap.length == 0) {
       return <>Loading..</>;
     }
-    const projection = d3.geoAlbersUsa().scale(800);
+    const projection = d3.geoAlbersUsa().scale(900).translate([width / 2, height / 2]);
     const geoPath = d3.geoPath().projection(projection);
     const currentWildFireData = countiesWithWildfireMap.get(focusYear + focusMonth);
     const usStatesPath = geoPath(mesh(usData, usData.objects.states, (a, b) => a !== b));
@@ -52,13 +55,13 @@ export default function CustomMap({focusYear, focusMonth}) {
   
   
     return (
-      <main className="p-40 w-screen">
-        <div>
+      <main className="w-full h-full">
+        {/* <div>
           <h1>State: {focusCounty ? focusCounty : ""}</h1>
-          <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
+          <h2>In {numericMonthToMonthName(focusMonth)}, {focusYear}, {focusCounty} county had a fire that spread {fireTotal} acres, 
               which is equivilant to {fireSentence}</h2>
-        </div>
-        <svg height={500} width={1000}>
+        </div> */}
+        <svg height={height} width={width}>
           <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
             {currentWildFireData.map((county) => {
               const color = county.fireSize == 0 ? "#fff5f0" : reds(getFireValue(parseInt(county.fireSize)));
@@ -69,7 +72,6 @@ export default function CustomMap({focusYear, focusMonth}) {
             <path stroke="black" strokeWidth="0.6" d={usStatesPath}></path>
           </g>
         </svg>
-        <LineChart height={300} width={1000} focusYear={parseInt(year)}/>
       </main>
     );
   }

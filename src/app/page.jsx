@@ -2,7 +2,7 @@ import Visual from "@/components/visual";
 
 export default function Page() {
   return (
-    <main className="p-40 w-screen">
+    <main className="p-10 w-screen h-full">
       <Visual/>
     </main>
   );

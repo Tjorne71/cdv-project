@@ -13,7 +13,7 @@ import {
 
 export default function LineChart({ height, width, focusYear }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
-  const margin = { top: 20, right: 20, bottom: 20, left: 40 };
+  const margin = { top: 10, right: 10, bottom: 20, left: 10 };
   const data = wildfireData.map((fire) => {
     const Fire_Size = fire.Fire_Size;
     const year = parseInt(fire.Year);
@@ -45,7 +45,7 @@ export default function LineChart({ height, width, focusYear }) {
       {xScale.ticks(12).map((month) => (
         <g key={month} transform={`translate(${xScale(month)}, 0)`}>
           {/* <line y1={height - margin.bottom} y2={margin.top} stroke="currentColor" strokeDasharray="1,3" /> */}
-          <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="currentColor" className="text-[10px]" alignmentBaseline="middle">
+          <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="currentColor" className="text-[5px]" alignmentBaseline="middle">
             {format(new Date(2000, month - 1, 1), "MMMM")}
           </text>
         </g>
