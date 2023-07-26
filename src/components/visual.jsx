@@ -43,7 +43,7 @@ export default function Visual() {
         <p className="pr-4 mb-4">
           Discover the evolving history of US wildfires and the pressing question: <br/>
           <br/><b>How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?</b> <br/><br/>Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. 
-          Join us on a quest for understanding and action to protect our landscapes from this growing threat."
+          Join us on a quest for understanding and action to protect our landscapes from this growing threat.
         </p>
         <hr className="mb-4 h-[2px] bg-white"></hr>
         <h2>{isSentenceVisible && generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence)}</h2>
