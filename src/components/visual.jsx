@@ -20,9 +20,9 @@ export default function Visual() {
     setFocusYear(value);
   }
   return (
-    <div className="h-[900px] w-[90%] font-Montserrat text-white flex flex-row mx-auto">
-      <div className="h-full flex flex-col justify-between w-2/3 mr-2">
-        <div className="text-2xl p-4 bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
+    <div className="h-[900px] max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto">
+      <div className="h-full flex flex-col justify-between w-4/7 mr-2">
+        <div className="text-2xl bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
@@ -30,26 +30,22 @@ export default function Visual() {
           <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthSliderCommit} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
         </div>
       </div>
-      <div className="text-2xl p-8 bg-[#3D5E70] flex flex-col h-auto w-1/3">
+      <div className="text-2xl p-8 bg-[#3D5E70] flex flex-col h-auto w-3/7">
         <div className="text-2xlbg-[#3D5E70] p-1 pb-3">
           <h1 className="text-4xl font-bold">Inferno Across America:</h1>
           <h1 className="text-3xl text-[#F9F871]">A Visual Chronicle of Wildfires</h1>
         </div>
         <hr className="mb-4 h-[2px] bg-white"></hr>
         <p className="pr-4 mb-4">
-          Discover the evolving history of US wildfires and the pressing question: <br />
-          <br />
-          <b>
-            How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?
-          </b>{" "}
-          <br />
-          <br />
-          Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. Join us on a quest for understanding and action to protect our landscapes from this growing threat.
+          Discover the evolving history of US wildfires and the pressing question: <br/>
+          <br/><b>How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?</b> <br/><br/>
+          <span className="text-xl">Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. 
+          Join us on a quest for understanding and action to protect our landscapes from this growing threat.</span>
         </p>
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
-          <h2 className="mb-8 bg-[#3b5665] p-3">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} />
+          <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
+          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
         </div>
       </div>
     </div>
