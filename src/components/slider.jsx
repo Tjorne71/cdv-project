@@ -10,7 +10,7 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
     setSliderValue(value)
   }
   return (
-    <div className={`p-2 flex flex-col ${width ? 'w-['+width+'px]': 'w-full'}`}>
+    <div style={{width:width+'px'}} className={`p-2 flex flex-col`}>
       <h1 className="font-Montserrat">{label}</h1>
       <Slider 
         size="small" 

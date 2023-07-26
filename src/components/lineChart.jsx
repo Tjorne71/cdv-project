@@ -13,7 +13,7 @@ import {
 
 export default function LineChart({ height, width, focusYear }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
-  const margin = { top: 20, right: 0, bottom: 20, left: 0 };
+  const margin = { top: 20, right: 40, bottom: 20, left: 40 };
   const data = wildfireData.map((fire) => {
     const Fire_Size = fire.Fire_Size;
     const year = parseInt(fire.Year);

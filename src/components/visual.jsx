@@ -20,14 +20,14 @@ export default function Visual() {
     setFocusYear(value + "");
   }
   return (
-    <div className="h-[900px] w-4/5 font-Montserrat text-white flex flex-row mx-auto">
+    <div className="h-[900px] w-[90%] font-Montserrat text-white flex flex-row mx-auto">
       <div className="h-full flex flex-col justify-between w-2/3 mr-2">
-        <div className="text-2xl p-4 bg-[#3D5E70] h-3/5 w-full flex items-center justify-center">
+        <div className="text-2xl p-4 bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} height={500} width={850} />
         </div>
-        <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col items-center justify-center mt-2">
+        <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
           <LineChart height={250} width={800} focusYear={focusYear} />
-          <CustomSlider label={null} width={1} defaultValue={6} onChangeCommitted={onMonthSliderCommit} min={1} max={12} />
+          <CustomSlider label={null} width={740} defaultValue={6} onChangeCommitted={onMonthSliderCommit} min={1} max={12} />
         </div>
       </div>
       <div className="text-2xl p-4 bg-[#3D5E70] h-auto w-1/3">

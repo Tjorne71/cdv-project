@@ -63,7 +63,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width }) {
   }
 
   return (
-    <main className="w-full h-full">
+    <main className="w-full h-full flex justify-center">
       {/* <div>
           <h1>State: {focusCounty ? focusCounty : ""}</h1>
           <h2>In {numericMonthToMonthName(focusMonth)}, {focusYear}, {focusCounty} county had a fire that spread {fireTotal} acres, 
