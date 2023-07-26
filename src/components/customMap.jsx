@@ -3,76 +3,51 @@ import React, { useState, useEffect } from "react";
 import * as d3 from "d3";
 import { mesh, feature } from "topojson-client";
 import countiesUs from "@/data/counties-10m.json";
-import wildfire2016 from "@/data/FiresPerCountyMonthly.json";
+import wildfireJson from "@/data/FiresPerCountyMonthly.json";
 import County from "@/components/county";
 import CircularProgress from "@mui/material/CircularProgress";
+import { dataMapper } from "@/util/dataMapper";
 
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible}) {
   const usData = countiesUs;
-  const [countiesWithWildfireMap, setSountiesWithWildfireMap] = useState([]);
-
-  useEffect(() => {
-    const counties = feature(usData, usData.objects.counties);
-    const wildfireData = wildfire2016;
-    var map = new Map();
-    for (let i = 1992; i <= 2015; i++) {
-      for (let c = 1; c <= 12; c++) {
-        const yearString = i.toString();
-        const monthString = c < 10 ? "0" + c : "" + c;
-        const key = yearString + monthString;
-        const fires = wildfireData.filter((fire) => fire.Year == yearString && fire.Month == monthString);
-        map = map.set(
-          key,
-          counties.features.map((county) => {
-            const fire = fires.find((fire) => fire.County_Id == county.id);
-            return { ...county, fireSize: fire ? fire.Fire_Size : 0 };
-          })
-        );
-      }
-    }
-    setSountiesWithWildfireMap(map);
-  }, [usData]);
-  if (countiesWithWildfireMap.length == 0) {
-    return (
-      <div className="h-full flex flex-col justify-center">
-        <CircularProgress
-          sx={{
-            color: "#F9F871",
-          }}
-        />
-      </div>
-    );
-  }
+  const counties = feature(usData, usData.objects.counties);
+  const wildfireData = dataMapper(wildfireJson, counties);
   const projection = d3
     .geoAlbersUsa()
     .scale(900)
     .translate([width / 2, height / 2]);
-  const geoPath = d3.geoPath().projection(projection);
-  const currentWildFireData = countiesWithWildfireMap.get(focusYear + focusMonth);
+  const geoPath = d3
+    .geoPath()
+    .projection(projection);
+  const focusWildFireData = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
   const usStatesPath = geoPath(mesh(usData, usData.objects.states, (a, b) => a !== b));
-  const reds = d3.scaleSequential().domain([1, 8]).interpolator(d3.interpolateReds);
 
+  const reds = d3
+  .scaleSequential()
+  .domain([1, 8])
+  .interpolator(d3.interpolateReds);
+  
   function countyClicked(county) {
     setFocusCounty(county.properties.name);
     setFireSentence(getFireSentence(county.fireSize));
     setFireTotal(Math.round(county.fireSize * 100) / 100);
     setIsSentenceVisible(true);
   }
-
   return (
     <main className="w-full h-full flex justify-center">
-      {/* <div>
-          <h1>State: {focusCounty ? focusCounty : ""}</h1>
-          <h2>In {numericMonthToMonthName(focusMonth)}, {focusYear}, {focusCounty} county had a fire that spread {fireTotal} acres, 
-              which is equivilant to {fireSentence}</h2>
-        </div> */}
       <svg height={height} width={width}>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
-          {currentWildFireData.map((county) => {
-            const color = county.fireSize == 0 ? "#fff5f0" : reds(getFireValue(parseInt(county.fireSize)));
-            return <County key={county.id} color={color} d={geoPath(county)} county={county} countyClicked={countyClicked} />;
+          {counties.features.map((county) => {
+            return <County key={county.id} color={"#fff5f0"} d={geoPath(county)} county={county} countyClicked={() => {}} />;
           })}
           <path stroke="black" strokeWidth="0.6" d={usStatesPath}></path>
+        </g>
+        <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
+          {focusWildFireData.map((fire) => {
+            const color = fire.fireSize == 0 ? "#fff5f0" : reds(getFireValue(fire.fireSize));
+            return <County key={"f"+fire.id} color={color} d={geoPath(fire.county)} county={fire.county} countyClicked={() => {}} />;
+          })}
+          <path stroke="black" strokeWidth="1" d={usStatesPath}></path>
         </g>
       </svg>
     </main>
