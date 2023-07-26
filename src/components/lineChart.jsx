@@ -13,7 +13,7 @@ import {
 
 export default function LineChart({ height, width, focusYear }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
-  const margin = { top: 20, right: 20, bottom: 20, left: 40 };
+  const margin = { top: 20, right: 40, bottom: 20, left: 40 };
   const data = wildfireData.map((fire) => {
     const Fire_Size = fire.Fire_Size;
     const year = parseInt(fire.Year);
@@ -31,7 +31,8 @@ export default function LineChart({ height, width, focusYear }) {
   const line = d3
     .line()
     .x((d) => xScale(d.month))
-    .y((d) => yScale(d.Fire_Size));
+    .y((d) => yScale(d.Fire_Size))
+    .curve(d3.curveBasis);
 
   const colors = d3.scaleOrdinal(years, d3.schemeReds);
 
@@ -39,13 +40,13 @@ export default function LineChart({ height, width, focusYear }) {
     <svg height={height} width={width}>
       {years.map((year) => {
         if (year != focusYear) {
-          return <YearLine key={year} d={line(filterDataForYear(data, year))} color={"black"} inFocus={false} />;
+          return <YearLine key={year} d={line(filterDataForYear(data, year))} opacity={0.2  } inFocus={false} />;
         }
       })}
       {xScale.ticks(12).map((month) => (
         <g key={month} transform={`translate(${xScale(month)}, 0)`}>
           {/* <line y1={height - margin.bottom} y2={margin.top} stroke="currentColor" strokeDasharray="1,3" /> */}
-          <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="currentColor" className="text-[10px]" alignmentBaseline="middle">
+          <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="white" className="text-[10px] uppercase" alignmentBaseline="middle">
             {format(new Date(2000, month - 1, 1), "MMMM")}
           </text>
         </g>
@@ -58,7 +59,7 @@ export default function LineChart({ height, width, focusYear }) {
           </text>
         </g>
       ))} */}
-      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} color={yearColorMap[focusYear]} inFocus={true} />
+      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} opacity={1} inFocus={true} />
     </svg>
   );
 }
@@ -66,30 +67,3 @@ export default function LineChart({ height, width, focusYear }) {
 function filterDataForYear(data, year) {
   return data.filter((d) => d.year == year);
 }
-
-const yearColorMap = {
-  1992: "#ff0000", // Red
-  1993: "#00ff00", // Green
-  1994: "#0000ff", // Blue
-  1995: "#ffff00", // Yellow
-  1996: "#ff00ff", // Magenta
-  1997: "#00ffff", // Cyan
-  1998: "#800000", // Maroon
-  1999: "#008000", // Green
-  2000: "#000080", // Navy
-  2001: "#808000", // Olive
-  2002: "#800080", // Purple
-  2003: "#008080", // Teal
-  2004: "#ff8000", // Orange
-  2005: "#ff0080", // Fuchsia
-  2006: "#80ff00", // Lime
-  2007: "#0080ff", // Aqua
-  2008: "#ff80ff", // Lavender
-  2009: "#80ffff", // Sky Blue
-  2010: "#804000", // Brown
-  2011: "#400080", // Indigo
-  2012: "#408000", // Forest Green
-  2013: "#804080", // Plum
-  2014: "#408080", // Steel Blue
-  2015: "#ff6666", // Light Red
-};
