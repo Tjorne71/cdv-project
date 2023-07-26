@@ -66,7 +66,7 @@ export default function Page() {
 
   function onYearSliderChange(event) {
     const value = event.target.value;
-    console.log(value)
+    setYear(value + "")
   }
 
 
@@ -79,6 +79,7 @@ export default function Page() {
           getAriaLabel={() => 'Temperature range'}
           onChange={onYearSliderChange}
           valueLabelDisplay="auto"
+          defaultValue={2010}
           min={1992}
           max={2015}
         />
