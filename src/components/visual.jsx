@@ -47,7 +47,7 @@ export default function Visual() {
         </p>
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
-          <h2 className="mb-8">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
+          <h2 className="mb-8 bg-[#3b5665] p-3">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
           <CustomSlider label={`Selected Year: ${focusYear}`} defaultValue={2010} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
         </div>
       </div>
