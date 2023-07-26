@@ -38,14 +38,14 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
       <svg height={height} width={width}>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
           {counties.features.map((county) => {
-            return <County key={county.id} color={"#fff5f0"} d={geoPath(county)} county={county} countyClicked={() => {}} />;
+            return <County key={county.id} color={"#fff5f0"} d={geoPath(county)} county={county} countyClicked={countyClicked} />;
           })}
           <path stroke="black" strokeWidth="0.6" d={usStatesPath}></path>
         </g>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
           {focusWildFireData.map((fire) => {
             const color = fire.fireSize == 0 ? "#fff5f0" : reds(getFireValue(fire.fireSize));
-            return <County key={"f"+fire.id} color={color} d={geoPath(fire.county)} county={fire.county} countyClicked={() => {}} />;
+            return <County key={"f"+fire.id} color={color} d={geoPath(fire.county)} county={fire.county} countyClicked={countyClicked} />;
           })}
           <path stroke="black" strokeWidth="1" d={usStatesPath}></path>
         </g>
