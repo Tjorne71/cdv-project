@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 
-export default function CustomSlider({ label, defaultValue, onChangeCommitted, min, max}) {
+export default function CustomSlider({ label, defaultValue, onChangeCommitted, min, max, width}) {
   const [sliderValue, setSliderValue] = useState(defaultValue)
 
   function onSliderChange(event) {
@@ -10,7 +10,7 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
     setSliderValue(value)
   }
   return (
-    <div className="w-72 p-2 flex flex-col">
+    <div className={`p-2 flex flex-col ${width ? 'w-['+width+'px]': 'w-full'}`}>
       <h1 className="font-Montserrat">{label}</h1>
       <Slider 
         size="small" 

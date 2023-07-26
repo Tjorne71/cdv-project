@@ -25,16 +25,16 @@ export default function Visual() {
         <div className="text-2xl p-4 bg-[#3D5E70] h-3/5 w-full flex items-center justify-center">
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} height={500} width={850} />
         </div>
-        <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex items-center justify-center mt-2">
+        <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col items-center justify-center mt-2">
           <LineChart height={250} width={800} focusYear={focusYear} />
+          <CustomSlider label={null} width={1} defaultValue={6} onChangeCommitted={onMonthSliderCommit} min={1} max={12} />
         </div>
       </div>
       <div className="text-2xl p-4 bg-[#3D5E70] h-auto w-1/3">
-        <div className="text-2xl p-4 bg-[#3D5E70] w-full mb-2">
+        <div className="text-2xlbg-[#3D5E70]">
           <h1>Fire In The Us</h1>
         </div>
         <CustomSlider label={"Year"} defaultValue={2010} onChangeCommitted={onYearSlideCommit} min={1992} max={2015} />
-        <CustomSlider label={"Month"} defaultValue={6} onChangeCommitted={onMonthSliderCommit} min={1} max={12} />
       </div>
     </div>
   );
