@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import CustomSlider from "@/components/slider";
 import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
+import ColorLegend from "@/components/colorLegend";
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
@@ -45,7 +46,7 @@ export default function Visual() {
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible}/>
+          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} showLabel={true}/>
         </div>
       </div>
     </div>

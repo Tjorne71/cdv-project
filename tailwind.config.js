@@ -15,6 +15,10 @@ module.exports = {
       fontFamily: {
         Montserrat: ['Montserrat', 'sans-serif'], // 'CustomFont' is the name you used in the @font-face rule
       },
+      colors: {
+        primary : '#3D5E70',
+        secondary: '#F9F871'
+      }
     },
   },
   plugins: [],

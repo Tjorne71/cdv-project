@@ -7,6 +7,7 @@ import wildfireJson from "@/data/FiresPerCountyMonthly.json";
 import County from "@/components/county";
 import CircularProgress from "@mui/material/CircularProgress";
 import { dataMapper } from "@/util/dataMapper";
+import ColorLegend from "@/components/colorLegend";
 
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible}) {
   const usData = countiesUs;
@@ -34,7 +35,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
     setIsSentenceVisible(true);
   }
   return (
-    <main className="w-full h-full flex justify-center">
+    <main className="w-full h-full flex flex-col justify-center">
       <svg height={height} width={width}>
         <g fill="none" stroke="none" strokeLinejoin="round" strokeLinecap="round">
           {counties.features.map((county) => {
@@ -50,40 +51,41 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
           <path stroke="black" strokeWidth="1" d={usStatesPath}></path>
         </g>
       </svg>
+      <ColorLegend colorFunction={reds}/>
     </main>
   );
 }
 
 function getFireValue(fire_total) {
-  let letter;
+  let value;
 
   switch (true) {
     case fire_total > 0 && fire_total <= 0.25:
-      letter = 2;
+      value = 2;
       break;
     case fire_total >= 0.26 && fire_total <= 9.9:
-      letter = 3;
+      value = 3;
       break;
     case fire_total >= 10.0 && fire_total <= 99.9:
-      letter = 4;
+      value = 4;
       break;
     case fire_total >= 100 && fire_total <= 299:
-      letter = 5;
+      value = 5;
       break;
     case fire_total >= 300 && fire_total <= 999:
-      letter = 6;
+      value = 6;
       break;
     case fire_total >= 1000 && fire_total <= 4999:
-      letter = 7;
+      value = 7;
       break;
     case fire_total >= 5000:
-      letter = 8;
+      value = 8;
       break;
     default:
-      letter = 1;
+      value = 1;
   }
 
-  return letter;
+  return value;
 }
 
 function getFireSentence(fire_total) {

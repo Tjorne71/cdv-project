@@ -22,7 +22,7 @@ export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
         d={d}
         fill="none"
         stroke={"white"}
-        strokeWidth={`${inFocus ? "2" : "0.0"}`}
+        strokeWidth={`${inFocus ? 2 : 0.0}`}
       />
       <motion.path
         initial={{ pathLength: 0 }}
@@ -31,7 +31,7 @@ export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
         d={d}
         fill="none"
         stroke="white"
-        opacity={`${hover || inFocus ? 1 : opacity}`}
+        opacity={`${hover || inFocus ? 3 : opacity}`}
         strokeWidth={2}
         onMouseLeave={() => {
           setHover(false);
