@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import CustomSlider from "@/components/slider";
+import CustomSlider from "@/components/customSlider";
 import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
-import ColorLegend from "@/components/colorLegend";
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
