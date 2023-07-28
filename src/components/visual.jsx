@@ -24,7 +24,6 @@ export default function Visual() {
   }
 
   function onChangeGraph() {
-    console.log("clicked");
     setIsShowYearlyGraph(!showYearlyGraph);
   }
   return (
@@ -36,11 +35,14 @@ export default function Visual() {
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
           <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"monthly"} textRight={"yearly"} />
           {showYearlyGraph ? (
-            <div className="" />
-          ) : (
             <>
               <YearLineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
               <CustomSlider label={null} width={800 - 80} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} />
+            </>
+          ) : (
+            <>
+              <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
+              <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
             </>
           )}
         </div>
@@ -64,7 +66,15 @@ export default function Visual() {
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Month: ${focusMonth}`} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
+          {showYearlyGraph ? (
+            <>
+              <CustomSlider label={`Selected Month: ${focusMonth}`} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
+            </>
+          ) : (
+            <>
+              
+            </>
+          )}
         </div>
       </div>
     </div>
