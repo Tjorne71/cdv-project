@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CustomSlider from "@/components/customSlider";
 import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
+import YearLineChart from "@/components/yearLineChart";
+import CustomSwith from "@/components/customSwith";
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
@@ -11,6 +13,7 @@ export default function Visual() {
   const [fireSentence, setFireSentence] = useState("Virgin Islands");
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
+  const [showYearlyGraph, setIsShowYearlyGraph] = useState(false);
 
   function onMonthChange(value) {
     setFocusMonth(value);
@@ -19,6 +22,11 @@ export default function Visual() {
   function onYearChange(value) {
     setFocusYear(value);
   }
+
+  function onChangeGraph() {
+    console.log("clicked");
+    setIsShowYearlyGraph(!showYearlyGraph);
+  }
   return (
     <div className="h-[900px] max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto">
       <div className="h-full flex flex-col justify-between w-4/7 mr-2">
@@ -26,8 +34,15 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
-          <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
+          <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"monthly"} textRight={"yearly"} />
+          {showYearlyGraph ? (
+            <div className="" />
+          ) : (
+            <>
+              <YearLineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
+              <CustomSlider label={null} width={800 - 80} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} />
+            </>
+          )}
         </div>
       </div>
       <div className="text-2xl p-8 bg-[#3D5E70] flex flex-col h-auto w-3/7">
@@ -37,15 +52,19 @@ export default function Visual() {
         </div>
         <hr className="mb-4 h-[2px] bg-white"></hr>
         <p className="pr-4 mb-4">
-          Discover the evolving history of US wildfires and the pressing question: <br/>
-          <br/><b>How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?</b> <br/><br/>
-          <span className="text-xl">Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. 
-          Join us on a quest for understanding and action to protect our landscapes from this growing threat.</span>
+          Discover the evolving history of US wildfires and the pressing question: <br />
+          <br />
+          <b>
+            How has <span className="text-[#F9F871]">climate</span> change impacted these infernos?
+          </b>{" "}
+          <br />
+          <br />
+          <span className="text-xl">Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. Join us on a quest for understanding and action to protect our landscapes from this growing threat.</span>
         </p>
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
-          <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} showLabel={true}/>
+          <CustomSlider label={`Selected Month: ${focusMonth}`} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
         </div>
       </div>
     </div>

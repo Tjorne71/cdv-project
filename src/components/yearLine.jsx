@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
+export default function YearLine({ d, year, opacity, inFocus, onLineClick, clickable}) {
   const [hover, setHover] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -31,7 +31,7 @@ export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
         d={d}
         fill="none"
         stroke="white"
-        opacity={`${hover || inFocus ? 3 : opacity}`}
+        opacity={`${hover && clickable || inFocus ? 3 : opacity}`}
         strokeWidth={2}
         onMouseLeave={() => {
           setHover(false);
@@ -40,10 +40,10 @@ export default function YearLine({ d, year, opacity, inFocus, onLineClick }) {
           setHover(true);
         }}
         onClick={() => {onLineClick(year)}}
-        className={"cursor-pointer"}
+        className={`${clickable ? 'cursor-pointer' : ''}`}
       />
       {/* Tooltip */}
-      {hover && (
+      {hover && clickable && (
         <g transform={`translate(${tooltipPosition.x},${tooltipPosition.y})`}>
           <rect x="5" y="-20" width="40" height="20" fill="black" opacity="0.7" rx="5" />
           <text x="10" y="-5" fill="white" fontSize="12px">

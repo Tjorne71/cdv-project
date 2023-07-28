@@ -44,6 +44,7 @@ export default function LineChart({ height, width, focusYear, focusMonth, onYear
               onLineClick={(year) => {
                 onYearClicked(year);
               }}
+              clickable={true}
             />
           );
         }
@@ -58,7 +59,7 @@ export default function LineChart({ height, width, focusYear, focusMonth, onYear
           </g>
         );
       })}
-      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} year={focusYear} opacity={1} inFocus={true} onLineClick={() => {}} />
+      <YearLine key={focusYear} d={line(filterDataForYear(data, focusYear))} year={focusYear} opacity={1} inFocus={true} onLineClick={() => {}} clickable={false} />
     </svg>
   );
 }
