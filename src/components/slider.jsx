@@ -11,7 +11,7 @@ export default function CustomSlider({ label, defaultValue, onChangeCommitted, m
   }
   return (
     <div className="w-72 p-8 flex flex-row space-y-4">
-      <h1>{label}</h1>
+      <h1 className="text-white">{label}</h1>
       <Slider size="small" getAriaLabel={() => "Slider"} onChange={onSliderChange} onChangeCommitted={() => onChangeCommitted(sliderValue)} valueLabelDisplay="auto" defaultValue={defaultValue} min={min} max={max} />
     </div>
   );

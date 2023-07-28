@@ -75,11 +75,11 @@ export default function Page() {
 
 
   return (
-    <>
+    <div className=" bg-[#3A5A6B] p-8 flex flex-col items-center">
       <CustomSlider label="Year" defaultValue={2010} min={1992} max={2015} onChangeCommitted={onYearSlideCommit}/>
       <CustomSlider label="Month" defaultValue={1} min={1} max={12} onChangeCommitted={onMonthSliderCommit}/>
       <div>
-      {isCountySelected && <h2>In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
+      {isCountySelected && <h2 className="text-white">In {numericMonthToMonthName(month)}, {year}, {focusCounty} county had a fire that spread {fireTotal} acres, 
             which is equivilant to {fireSentence}</h2>}
       </div>
       <svg height={500} width={1000}>
@@ -94,7 +94,7 @@ export default function Page() {
         </g>
       </svg>
       <LineChart height={300} width={1000} focusYear={parseInt(year)}/>
-    </>
+    </div>
   );
 }
 
