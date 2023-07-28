@@ -72,7 +72,7 @@ export default function Visual() {
             </>
           ) : (
             <>
-              
+              <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} showLabel={true}/>
             </>
           )}
         </div>
