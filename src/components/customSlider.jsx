@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
 
-export default function CustomSlider({ label, onChangeCommitted, min, max, width, setIsSentenceVisible, value, showLabel}) {
-  const [sliderValue, setSliderValue] = useState(value)
+export default function CustomSlider({ label1, label2, onChangeCommitted, min, max, width, setIsSentenceVisible, value, showLabel }) {
+  const [sliderValue, setSliderValue] = useState(value);
 
   useEffect(() => {
     setSliderValue(value);
@@ -11,26 +11,32 @@ export default function CustomSlider({ label, onChangeCommitted, min, max, width
 
   function onSliderChange(event) {
     const value = event.target.value;
-    setSliderValue(value)
-    setIsSentenceVisible(false)
+    setSliderValue(value);
+    setIsSentenceVisible(false);
   }
 
   return (
-    <div style={{width:width+'px'}} className={`flex flex-col`}>
-      <h1 className="font-Montserrat text-base">{label}</h1>
-      <Slider 
-        size="small" 
-        getAriaLabel={() => "Slider"} 
-        onChange={onSliderChange} 
-        onChangeCommitted={() => {onChangeCommitted(sliderValue)}}
+    <div style={{ width: width + "px" }} className={`flex flex-col`}>
+      <div className="font-Montserrat text-base flex flex-row">
+        <h1 className="">{label1}</h1>
+        <h1 className="font-bold ml-2">{label2}</h1>
+      </div>
+
+      <Slider
+        size="small"
+        getAriaLabel={() => "Slider"}
+        onChange={onSliderChange}
+        onChangeCommitted={() => {
+          onChangeCommitted(sliderValue);
+        }}
         defaultValue={sliderValue}
         value={sliderValue}
-        min={min} 
+        min={min}
         max={max}
         valueLabelDisplay={showLabel ? "auto" : "off"}
         marks={true}
         sx={{
-          color: '#F9F871',
+          color: "#F9F871",
         }}
       />
     </div>

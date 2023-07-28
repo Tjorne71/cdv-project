@@ -14,18 +14,6 @@ export default function YearLine({ d, year, opacity, inFocus, onLineClick, click
     <svg onMouseMove={handleMouseMove}>
       <motion.path
         initial={{ pathLength: 0 }}
-        animate={{ 
-          pathLength: 1,
-        }}
-        
-        transition={{ duration: 1.5, type: "spring" }}
-        d={d}
-        fill="none"
-        stroke={"white"}
-        strokeWidth={`${inFocus ? 2 : 0.0}`}
-      />
-      <motion.path
-        initial={{ pathLength: 0 }}
         animate={{ pathLength: 1, stroke: "white", }}
         transition={{ duration: 1.5, type: "spring" }}
         d={d}

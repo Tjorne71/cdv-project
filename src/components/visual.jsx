@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomSlider from "@/components/customSlider";
 import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
 import YearLineChart from "@/components/yearLineChart";
 import CustomSwith from "@/components/customSwith";
+import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
@@ -14,6 +15,25 @@ export default function Visual() {
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
   const [showYearlyGraph, setIsShowYearlyGraph] = useState(false);
+
+  // // Function to update the focusMonth state by adding one and then wait for 1000ms before running again
+  // const incrementFocusMonth = () => {
+  //   setFocusMonth((prevFocusMonth) => {
+  //     const newFocusMonth = (prevFocusMonth % 12) + 1;
+  //     if (newFocusMonth === 12) {
+  //       setFocusYear((prevFocusYear) => prevFocusYear + 1);
+  //     }
+  //     return newFocusMonth;
+  //   });
+  // };
+
+  // // Run incrementFocusMonth once when the component mounts
+  // useEffect(() => {
+  //   const intervalId = setInterval(incrementFocusMonth, 1250);
+
+  //   // Clean up the interval when the component unmounts to avoid memory leaks
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   function onMonthChange(value) {
     setFocusMonth(value);
@@ -33,7 +53,7 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"monthly"} textRight={"yearly"} />
+          <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"Yearly Comparison"} textRight={"Evolution Through The Years"} />
           {showYearlyGraph ? (
             <>
               <YearLineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
@@ -68,11 +88,11 @@ export default function Visual() {
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">{isSentenceVisible ? generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence) : "Click on a county too see county specific fires."}</h2>
           {showYearlyGraph ? (
             <>
-              <CustomSlider label={`Selected Month: ${focusMonth}`} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
+              <CustomSlider label1={`Selected Month:`} label2={`${format(new Date(2000, focusMonth - 1, 1), "MMMM")}`} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
             </>
           ) : (
             <>
-              <CustomSlider label={`Selected Year: ${focusYear}`} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} showLabel={true}/>
+              <CustomSlider label1={`Selected Year:`} label2={focusYear} value={focusYear} onChangeCommitted={onYearChange} min={1992} max={2015} setIsSentenceVisible={setIsSentenceVisible} showLabel={true} />
             </>
           )}
         </div>

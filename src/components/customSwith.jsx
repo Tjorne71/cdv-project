@@ -39,14 +39,14 @@ export default function CustomSwitch({ state, onChange, textLeft, textRight }) {
   return (
     <ThemeProvider theme={customTheme}>
       <div className="flex justify-center items-center w-full">
-        <p className={`font-Montserrat text-base w-full text-right ${checked ? "text-white opacity-70" : 'text-secondary'}`}>{textLeft}</p>
+        <p onClick={() => {if(checked) {onChange()}}} className={`font-Montserrat text-base w-full text-right ${checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : 'text-secondary'}`}>{textLeft}</p>
         <Switch
           checked={state}
           onChange={() => {
             onChange();
           }}
         />
-        <p className={`font-Montserrat text-base w-full text-left ${!checked ? "text-white opacity-70" : 'text-secondary'}`}>{textRight}</p>
+        <p onClick={() => {if(!checked) {onChange()}}} className={`font-Montserrat text-base w-full text-left ${!checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : 'text-secondary'}`}>{textRight}</p>
       </div>
     </ThemeProvider>
   );
