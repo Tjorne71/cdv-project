@@ -29,7 +29,7 @@ export default function Visual() {
       return;
     }
     setFocusMonth(value);
-    await timeout(1500);
+    await timeout(1700);
     const nextMonth = value + 1;
     incrementFocusMonth(nextMonth);
   }
