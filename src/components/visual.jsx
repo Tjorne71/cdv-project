@@ -5,40 +5,34 @@ import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
 import YearLineChart from "@/components/yearLineChart";
 import CustomSwithGroup from "@/components/customSwithGroup";
+import { AiOutlinePlayCircle, AiOutlinePauseCircle } from "react-icons/ai";
 import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
-import InfoIcon from '@mui/icons-material/InfoOutlined';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+import InfoIcon from "@mui/icons-material/InfoOutlined";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
   const [focusYear, setFocusYear] = useState(2010);
+  const [isPlayingMonth, setIsPlayingMonth] = useState(false);
   const [focusCounty, setFocusCounty] = useState("Los Angeles");
   const [fireSentence, setFireSentence] = useState("Virgin Islands");
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
   const [showYearlyGraph, setIsShowYearlyGraph] = useState(false);
-  const yearlyComparrisionInfoText = "Each line represents a year, that indicates how many acres were burned per month in the entirety of the US."
-  const evolutionInfoText = "This graph indicates how many acres were burned each year in the entirety of the US."
+  const yearlyComparrisionInfoText = "Each line represents a year, that indicates how many acres were burned per month in the entirety of the US.";
+  const evolutionInfoText = "This graph indicates how many acres were burned each year in the entirety of the US.";
 
-  // // Function to update the focusMonth state by adding one and then wait for 1000ms before running again
-  // const incrementFocusMonth = () => {
-  //   setFocusMonth((prevFocusMonth) => {
-  //     const newFocusMonth = (prevFocusMonth % 12) + 1;
-  //     if (newFocusMonth === 12) {
-  //       setFocusYear((prevFocusYear) => prevFocusYear + 1);
-  //     }
-  //     return newFocusMonth;
-  //   });
-  // };
-
-  // // Run incrementFocusMonth once when the component mounts
-  // useEffect(() => {
-  //   const intervalId = setInterval(incrementFocusMonth, 1250);
-
-  //   // Clean up the interval when the component unmounts to avoid memory leaks
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  async function incrementFocusMonth(value) {
+    if (value == 13) {
+      setIsPlayingMonth(false);
+      return;
+    }
+    setFocusMonth(value);
+    await timeout(1500);
+    const nextMonth = value + 1;
+    incrementFocusMonth(nextMonth);
+  }
 
   function onMonthChange(value) {
     setFocusMonth(value);
@@ -52,7 +46,7 @@ export default function Visual() {
     setIsShowYearlyGraph(!showYearlyGraph);
   }
   return (
-    <div className="max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto">
+    <div className="max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto relative">
       <div className="flex flex-col justify-between w-4/7 mr-2">
         <div className="text-2xl bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
@@ -65,7 +59,7 @@ export default function Visual() {
             <div>
               <Tooltip title={<span className="text-base">{showYearlyGraph ? evolutionInfoText : yearlyComparrisionInfoText}</span>}>
                 <IconButton>
-                  <InfoIcon sx={{ color: 'white' }}/>
+                  <InfoIcon sx={{ color: "white" }} />
                 </IconButton>
               </Tooltip>
             </div>
@@ -78,7 +72,24 @@ export default function Visual() {
           ) : (
             <>
               <LineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
-              <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
+              <div className="relative">
+                <CustomSlider label={null} width={720} value={focusMonth} onChangeCommitted={onMonthChange} min={1} max={12} setIsSentenceVisible={setIsSentenceVisible} />
+                {isPlayingMonth ? (
+                  <>
+                    <AiOutlinePauseCircle className="text-secondary text-xl cursor-not-allowed absolute right-[-40px] top-1"/>
+                  </>
+                ) : (
+                  <>
+                    <AiOutlinePlayCircle
+                      className="text-white text-xl cursor-pointer hover:text-secondary absolute right-[-40px] top-1"
+                      onClick={() => {
+                        setIsPlayingMonth(true);
+                        incrementFocusMonth(focusMonth);
+                      }}
+                    />
+                  </>
+                )}
+              </div>
             </>
           )}
         </div>
@@ -140,4 +151,8 @@ function generateSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSen
 
   const randomNumber = Math.floor(Math.random() * 10);
   return sentences[randomNumber];
+}
+
+function timeout(delay) {
+  return new Promise((res) => setTimeout(res, delay));
 }

@@ -95,8 +95,8 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
                     fill="black"
                     fontSize="11px"
                     stroke="white"
-                    strokeWidth={1}
-                    strokeOpacity={0.8}
+                    strokeWidth={2}
+                    strokeOpacity={1}
                     className="font-Montserrat"
                     paintOrder="stroke"
                     style={{ pointerEvents: "none" }} // Add this style to make it invisible to the cursor

@@ -17,7 +17,7 @@ export default function CustomSwitchGroup({ state, onChange, textLeft, textRight
             onChange();
           }
         }}
-        className={`font-Montserrat text-base w-full text-right ${checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : "text-secondary"}`}
+        className={`font-Montserrat text-base w-full text-right ${checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : "text-secondary cursor-not-allowed"}`}
       >
         {textLeft}
       </p>
@@ -33,7 +33,7 @@ export default function CustomSwitchGroup({ state, onChange, textLeft, textRight
             onChange();
           }
         }}
-        className={`font-Montserrat text-base w-full text-left ${!checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : "text-secondary"}`}
+        className={`font-Montserrat text-base w-full text-left ${!checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : "text-secondary cursor-not-allowed"}`}
       >
         {textRight}
       </p>

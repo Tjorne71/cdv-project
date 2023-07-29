@@ -54,7 +54,7 @@ export default function LineChart({ height, width, focusYear, focusMonth, onYear
         return (
           <g key={month} transform={`translate(${xScale(month)}, 0)`}>
             <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="white" className={`text-[8px] cursor-pointer hover:font-bold transition-all ease-in-out duration-100 uppercase ${isFocusMonth ? "font-bold" : "font-thin"}`} alignmentBaseline="middle" onClick={() => {onMonthClick(month)}}>
-              {format(new Date(2000, month - 1, 1), "MMMM")}
+              {format(new Date(2000, month - 1, 1), "MMM")}
             </text>
           </g>
         );
