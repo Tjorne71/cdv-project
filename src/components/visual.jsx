@@ -47,8 +47,8 @@ export default function Visual() {
     setIsShowYearlyGraph(!showYearlyGraph);
   }
   return (
-    <div className="h-[900px] max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto">
-      <div className="h-full flex flex-col justify-between w-4/7 mr-2">
+    <div className="max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto">
+      <div className="flex flex-col justify-between w-4/7 mr-2">
         <div className="text-2xl bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
