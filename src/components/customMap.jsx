@@ -8,6 +8,9 @@ import County from "@/components/county";
 import CircularProgress from "@mui/material/CircularProgress";
 import { dataMapper } from "@/util/dataMapper";
 import ColorLegend from "@/components/colorLegend";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
   const usData = countiesUs;
