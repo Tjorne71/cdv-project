@@ -4,7 +4,7 @@ import CustomSlider from "@/components/customSlider";
 import CustomMap from "@/components/customMap";
 import LineChart from "@/components/lineChart";
 import YearLineChart from "@/components/yearLineChart";
-import CustomSwith from "@/components/customSwith";
+import CustomSwithGroup from "@/components/customSwithGroup";
 import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
 import InfoIcon from '@mui/icons-material/InfoOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -60,7 +60,7 @@ export default function Visual() {
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
           <div className="flex justify-between w-full">
             <div className="flex-1">
-              <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"Yearly Comparison"} textRight={"Evolution Through The Years"} />
+              <CustomSwithGroup state={showYearlyGraph} onChange={onChangeGraph} textLeft={"Yearly Comparison"} textRight={"Evolution Through The Years"} />
             </div>
             <div>
               <Tooltip title={<span className="text-base">{showYearlyGraph ? evolutionInfoText : yearlyComparrisionInfoText}</span>}>

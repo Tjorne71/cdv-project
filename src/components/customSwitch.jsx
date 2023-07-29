@@ -29,25 +29,16 @@ const customTheme = createTheme({
   },
 });
 
-
-export default function CustomSwitch({ state, onChange, textLeft, textRight }) {
-  const [checked, setChecked] = useState(state);
-
-  useEffect(() => {
-    setChecked(state);
-  }, [state]);
+export default function CustomSwitch({state, onChange}) {
   return (
     <ThemeProvider theme={customTheme}>
-      <div className="flex justify-center items-center w-full">
-        <p onClick={() => {if(checked) {onChange()}}} className={`font-Montserrat text-base w-full text-right ${checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : 'text-secondary'}`}>{textLeft}</p>
         <Switch
+          defaultValue={state}
           checked={state}
           onChange={() => {
             onChange();
           }}
         />
-        <p onClick={() => {if(!checked) {onChange()}}} className={`font-Montserrat text-base w-full text-left ${!checked ? "text-white opacity-70 hover:font-bold cursor-pointer" : 'text-secondary'}`}>{textRight}</p>
-      </div>
     </ThemeProvider>
-  );
+  )
 }
