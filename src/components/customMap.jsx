@@ -16,6 +16,9 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   const usData = countiesUs;
   const counties = feature(usData, usData.objects.counties);
   const wildfireData = dataMapper(wildfireJson, counties);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const projection = d3
     .geoAlbersUsa()
     .scale(900)
