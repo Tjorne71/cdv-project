@@ -12,6 +12,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CustomSwitch from "./customSwitch";
+import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
 
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
   const usData = countiesUs;
@@ -109,8 +110,8 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
         </g>
       </svg>
       <div className="flex ml-6 mr-6 mb-4 justify-between items-end">
-        <span className="text-sm font-bold">
-          {numericMonthToMonthName(focusMonth)}, {focusYear}
+        <span className="text-sm font-bold font-Montserrat">
+          {format(new Date(2000, focusMonth - 1, 1), "MMMM")}, {focusYear}
         </span>
         <div>
           <ColorLegend colorFunction={reds} />
@@ -155,11 +156,6 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
       </div>
     </main>
   );
-}
-export function numericMonthToMonthName(numericMonth) {
-  const dateObj = new Date(`2023-${numericMonth}-01`);
-  const monthName = dateObj.toLocaleString("en-US", { month: "long" });
-  return monthName;
 }
 
 function getFireValue(fire_total) {
