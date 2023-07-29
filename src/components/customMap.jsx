@@ -70,9 +70,10 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
           <path stroke="black" strokeWidth="1" d={usStatesPath}></path>
         </g>
       </svg>
-      <div className="flex">
-        <ColorLegend colorFunction={reds}/>
-        <a href="#" onClick={handleOpen} className="ml-auto mr-2 text-sm p-2 underline hover:text-gray-300 transition-all duration-500 ease-in-out">Data Source</a>
+      <div className="flex ml-6 mr-6 mb-4 justify-between items-end">
+        <span className="text-sm font-bold">{numericMonthToMonthName(focusMonth)}, {focusYear}</span>
+        <div><ColorLegend colorFunction={reds}/></div>
+        <a href="#" onClick={handleOpen} className="text-sm underline hover:text-gray-300 transition-all duration-500 ease-in-out">Data Source</a>
         <Modal
           open={open}
           onClose={handleClose}
@@ -85,7 +86,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               
-              <p>All data in this project was sourced from the dataset "1.88 Million US Wildfires".</p>
+              <p>All data in this project was sourced from the dataset &quot;1.88 Million US Wildfires&quot;.</p>
               <br/>
               <p>We have extracted our own dataset using using SQL which is used to generate the visualizations.</p>
               <br/>
@@ -107,6 +108,11 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
       </div>
     </main>
   );
+}
+export function numericMonthToMonthName(numericMonth) {
+  const dateObj = new Date(`2023-${numericMonth}-01`);
+  const monthName = dateObj.toLocaleString("en-US", { month: "long" });
+  return monthName;
 }
 
 function getFireValue(fire_total) {

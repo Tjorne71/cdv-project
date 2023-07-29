@@ -6,6 +6,9 @@ import LineChart from "@/components/lineChart";
 import YearLineChart from "@/components/yearLineChart";
 import CustomSwith from "@/components/customSwith";
 import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
+import InfoIcon from '@mui/icons-material/InfoOutlined';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
@@ -15,6 +18,8 @@ export default function Visual() {
   const [fireTotal, setFireTotal] = useState(14705.8);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
   const [showYearlyGraph, setIsShowYearlyGraph] = useState(false);
+  const yearlyComparrisionInfoText = "Each line represents a year, that indicates how many acres were burned per month in the entirety of the US."
+  const evolutionInfoText = "This graph indicates how many acres were burned each year in the entirety of the US."
 
   // // Function to update the focusMonth state by adding one and then wait for 1000ms before running again
   // const incrementFocusMonth = () => {
@@ -53,7 +58,18 @@ export default function Visual() {
           <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
-          <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"Yearly Comparison"} textRight={"Evolution Through The Years"} />
+          <div className="flex justify-between w-full">
+            <div className="flex-1">
+              <CustomSwith state={showYearlyGraph} onChange={onChangeGraph} textLeft={"Yearly Comparison"} textRight={"Evolution Through The Years"} />
+            </div>
+            <div>
+              <Tooltip title={<span className="text-base">{showYearlyGraph ? evolutionInfoText : yearlyComparrisionInfoText}</span>}>
+                <IconButton>
+                  <InfoIcon sx={{ color: 'white' }}/>
+                </IconButton>
+              </Tooltip>
+            </div>
+          </div>
           {showYearlyGraph ? (
             <>
               <YearLineChart height={250} width={800} focusYear={focusYear} focusMonth={focusMonth} onYearClicked={onYearChange} onMonthClick={onMonthChange} />
