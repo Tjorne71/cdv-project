@@ -110,13 +110,13 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
         </g>
       </svg>
       <div className="flex ml-6 mr-6 mb-4 justify-between items-end">
-        <span className="text-sm font-bold font-Montserrat">
+        <span className="text-sm font-bold font-Montserrat w-full">
           {format(new Date(2000, focusMonth - 1, 1), "MMMM")}, {focusYear}
         </span>
-        <div>
+        <div className="w-full">
           <ColorLegend colorFunction={reds} />
         </div>
-        <a href="#" onClick={handleOpen} className="text-sm underline hover:text-gray-300 transition-all duration-500 ease-in-out">
+        <a href="#" onClick={handleOpen} className="text-sm underline hover:text-gray-300 transition-all duration-500 ease-in-out w-full text-right">
           Data Source
         </a>
         <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
