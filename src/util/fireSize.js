@@ -1,3 +1,5 @@
+import {monthToTextLong} from "@/util/monthFormat"
+
 const sizeRanges = [
   [0, 0.25],
   [0.25, 10],
@@ -103,5 +105,25 @@ export function fireSizeToSentenceWithImages(fireSize) {
     default:
       return { sentence: "", image: "" };
   }
+}
+
+export function generateCompleteFireSentence(month, year, county, fireSize, fireSentence) {
+  const monthText = monthToTextLong(month);
+  if (fireSize < 0.05) return `${county} county hasn't had any wildfires during ${monthText} ${year}.`;
+  const sentences = [
+    `In ${monthText} ${year}, ${county} county had a fire that spread ${fireSize} acres, which is equivalent to ${fireSentence}.`,
+    `Back in ${monthText} ${year}, ${county} county experienced a fire that extended over ${fireSize} acres, equivalent to the size of ${fireSentence}.`,
+    `During ${monthText} ${year}, a fire erupted in ${county} county, consuming an area of ${fireSize} acres, matching the size of ${fireSentence}.`,
+    `In ${monthText} of ${year}, there was a fire outbreak in ${county} county, which covered an expanse of ${fireSize} acres, mirroring the area of ${fireSentence}.`,
+    `${county} county encountered a fire in ${monthText} ${year}, spreading across ${fireSize} acres, an area comparable to that of ${fireSentence}.`,
+    `The fire that occurred in ${monthText} ${year} ravaged an area of ${fireSize} acres in ${county} county, which coincidentally equates to the size of ${fireSentence}.`,
+    `${county} county experienced a fire incident in ${monthText} ${year}, which spread across ${fireSize} acres, equivalent to the area of ${fireSentence}.`,
+    `During the month of ${monthText} in ${year}, ${county} county was hit by a fire, covering a total of ${fireSize} acres, mirroring the size of ${fireSentence}.`,
+    `${monthText} ${year} saw a fire outbreak in ${county} county, extending over an expanse of ${fireSize} acres, matching the area of ${fireSentence}.`,
+    `A fire blazed through ${county} county in ${monthText} ${year}, consuming precisely ${fireSize} acres, the same as ${fireSentence}'s size.`,
+  ];
+
+  const randomNumber = Math.floor(Math.random() * 10);
+  return sentences[randomNumber];
 }
 

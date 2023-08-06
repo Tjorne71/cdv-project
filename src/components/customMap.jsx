@@ -9,7 +9,7 @@ import { dataMapper } from "@/util/dataMapper";
 import ColorLegend from "@/components/colorLegend";
 import DataSourceModal from "@/components/dataSourceModal";
 import CustomSwitch from "./customSwitch";
-import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
+import {monthToTextLong} from "@/util/monthFormat"
 import {fireSizeToValue, fireSizeToSentenceWithImages} from "@/util/fireSize.js"
 import {stateNameToShorthand} from "@/util/stateNameShortHand"
 import StateText from "./stateText";
@@ -84,7 +84,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
       </svg>
       <div className="flex ml-6 mr-6 mb-4 justify-between items-end">
         <span className="text-sm font-bold font-Montserrat w-full">
-          {format(new Date(2000, focusMonth - 1, 1), "MMMM")}, {focusYear}
+          {monthToTextLong(focusMonth)}, {focusYear}
         </span>
         <div className="w-full">
           <ColorLegend colorFunction={reds} />

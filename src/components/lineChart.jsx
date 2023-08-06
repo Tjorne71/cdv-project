@@ -2,8 +2,7 @@ import React from "react";
 import * as d3 from "d3";
 import wildfireData from "@/data/FiresPerMonthUS.json";
 import YearLine from "@/components/yearLine";
-import { motion } from "framer-motion";
-import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
+import {monthToTextShort} from "@/util/monthFormat"
 
 export default function LineChart({ height, width, focusYear, focusMonth, onYearClicked, onMonthClick }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
@@ -27,8 +26,6 @@ export default function LineChart({ height, width, focusYear, focusMonth, onYear
     .x((d) => xScale(d.month))
     .y((d) => yScale(d.Fire_Size))
     .curve(d3.curveBasis);
-
-  const colors = d3.scaleOrdinal(years, d3.schemeReds);
 
   return (
     <svg height={height} width={width}>
@@ -54,7 +51,7 @@ export default function LineChart({ height, width, focusYear, focusMonth, onYear
         return (
           <g key={month} transform={`translate(${xScale(month)}, 0)`}>
             <text x={(xScale(month) - xScale(month)) / 2} y={height - 5} textAnchor="middle" fill="white" className={`text-[8px] cursor-pointer hover:font-bold transition-all ease-in-out duration-100 uppercase ${isFocusMonth ? "font-bold" : "font-thin"}`} alignmentBaseline="middle" onClick={() => {onMonthClick(month)}}>
-              {format(new Date(2000, month - 1, 1), "MMM")}
+              {monthToTextShort(month)}
             </text>
           </g>
         );

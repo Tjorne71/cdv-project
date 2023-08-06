@@ -2,8 +2,6 @@ import React from "react";
 import * as d3 from "d3";
 import wildfireData from "@/data/FiresPerMonthUS.json";
 import YearLine from "@/components/yearLine";
-import { motion } from "framer-motion";
-import { eachMonthOfInterval, endOfMonth, format, isSameMonth, parseISO, startOfMonth } from "date-fns";
 
 export default function YearLineChart({ height, width, focusYear, focusMonth, onYearClicked, onMonthClick }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
