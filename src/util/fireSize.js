@@ -65,7 +65,7 @@ export function fireSizeToSentenceWithImages(fireSize) {
     case 5:
       return { sentence: "a Walmart Supercenter", image: imagePath + "walmart.jpg" };
     case 6:
-      return { sentence: "two 18 hole golf courses", image: imagePath + "golf.jpg" };
+      return { sentence: "two 18 hole golf courses", image: imagePath + "golf.jpeg" };
     case 7:
       return { sentence: "Ellis Island", image: imagePath + "ellisisland.jpg" };
     case 8:
