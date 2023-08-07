@@ -19,9 +19,10 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   const usData = countiesUs;
   const [showStatesLabels, setShowStatesLabels] = useState(false);
   const counties = feature(usData, usData.objects.counties);
-  const countiesNames = counties.features.map((county) => county.properties.name)
+  const countiesNames = counties.features.map((county) => county.properties.name);
   const uniqueCountiesNames = [...new Set(countiesNames)];
   const wildfireData = dataMapper(wildfireJson, counties);
+  const focusWildFireData = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -30,7 +31,6 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
     .scale(900)
     .translate([width / 2, height / 2]);
   const geoPath = d3.geoPath().projection(projection);
-  const focusWildFireData = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
   const usStatesPath = geoPath(mesh(usData, usData.objects.states, (a, b) => a !== b));
 
   const reds = d3.scaleSequential().domain([1, 8]).interpolator(d3.interpolateReds);
@@ -43,12 +43,23 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   }
 
   function countySearched(county) {
-    const fire = focusWildFireData.filter((fire) => fire.county.properties.name == county)
-    const fireSize = fire[0].fireSize ?? 0
-    setFocusCounty(county);
-    setFireSentence(fireSizeToSentenceWithImages(fireSize));
-    setFireTotal(Math.round(fireSize * 100) / 100);
-    setIsSentenceVisible(true);
+    try {
+      const fire = focusWildFireData.filter((fire) => {
+        if(fire.county.properties.name == county) {
+          return fire.fireSize
+        }
+      });
+      let fireSize = 0
+      if(fire.length != 0) {
+        fireSize = fire[0].fireSize
+      }
+      setFocusCounty(county);
+      setFireSentence(fireSizeToSentenceWithImages(fireSize));
+      setFireTotal(Math.round(fireSize * 100) / 100);
+      setIsSentenceVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function onShowStatesLabelsChange() {
@@ -58,7 +69,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   return (
     <main className="w-full h-full flex flex-col justify-center relative">
       <div className="absolute top-4 right-4 w-96">
-        <SearchField values={uniqueCountiesNames} onChange={countySearched}/>
+        <SearchField values={uniqueCountiesNames} onChange={countySearched} />
       </div>
       <div className="flex flex-row font-Montserrat text-xs items-center mt-1">
         <CustomSwitch onChange={onShowStatesLabelsChange} state={showStatesLabels} />

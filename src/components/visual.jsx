@@ -32,7 +32,7 @@ export default function Visual() {
       return;
     }
     setFocusMonth(value);
-    await timeout(1000);
+    await timeout(1500);
     const nextMonth = value + 1;
     incrementFocusMonth(nextMonth);
   }
@@ -87,6 +87,7 @@ export default function Visual() {
                     <AiOutlinePlayCircle
                       className="text-white text-xl cursor-pointer hover:text-secondary absolute right-[-40px] top-1"
                       onClick={() => {
+                        setIsSentenceVisible(false);
                         setIsPlayingMonth(true);
                         incrementFocusMonth(focusMonth);
                       }}
