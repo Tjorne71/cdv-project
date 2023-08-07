@@ -103,7 +103,7 @@ export function fireSizeToSentenceWithImages(fireSize) {
     case 24:
       return { sentence: "Grand Canyon", image: imagePath + "grandcanyon.jpeg" };
     default:
-      return { sentence: "", image: "" };
+      return { sentence: "", image: null };
   }
 }
 
