@@ -2,6 +2,7 @@ import React from "react";
 import * as d3 from "d3";
 import wildfireData from "@/data/FiresPerMonthUS.json";
 import YearLine from "@/components/yearLine";
+import { formatNumber } from "@/util/formatNumber";
 
 export default function YearLineChart({ height, width, focusYear, focusMonth, onYearClicked, onMonthClick }) {
   const years = [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015];
@@ -44,11 +45,11 @@ export default function YearLineChart({ height, width, focusYear, focusMonth, on
 
   return (
     <svg height={height} width={width}>
-      {yScale.ticks(5).map((max) => (
+      {yScale.ticks(6).map((max) => (
         <g transform={`translate(0,${yScale(max)})`} className="text-gray-400" key={max}>
           <line x1={margin.left} x2={width - margin.right} stroke="currentColor" strokeDasharray="1,3" />
           <text alignmentBaseline="middle" className="text-[10px]" fill="currentColor" style={{ pointerEvents: "none" }}>
-            {max}
+            {formatNumber(max)}
           </text>
         </g>
       ))}
