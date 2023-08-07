@@ -118,7 +118,7 @@ export default function Visual() {
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">
-            {isSentenceVisible ? generateCompleteFireSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence.sentence) : "Click on a county too see county specific fires."} {fireSentence.image ? <ImageTip imageUrl={fireSentence.image} sentence={fireSentence.sentence}/> : <></> } 
+            {isSentenceVisible ? generateCompleteFireSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence.sentence) : "Click on a county too see county specific fires."} {fireSentence != null && fireSentence?.image != "" && <ImageTip imageUrl={fireSentence.image} sentence={fireSentence.sentence} />}
           </h2>
           {showYearlyGraph ? (
             <>
