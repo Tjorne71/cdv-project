@@ -31,7 +31,7 @@ export default function County({ d, county, color, countyClicked, fireSize}) {
           fill: currentColor,
         }}
         transition={{
-          duration: 0.4, // Total duration of the transition // Duration of scale animation
+          duration: 0.2,
         }}
       />
     </>

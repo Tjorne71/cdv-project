@@ -1,6 +1,6 @@
 import {monthToTextLong} from "@/util/monthFormat"
 
-const sizeRanges = [
+export const sizeRanges = [
   [0, 0.25],
   [0.25, 10],
   [10, 100],
@@ -49,7 +49,7 @@ export function fireSizeToValue(fireSize) {
 
 export function fireSizeToSentenceWithImages(fireSize) {
   const index = sizeRangesExpanded.findIndex(range => fireSize > range[0] && fireSize <= range[1]);
-  const imagePath = "@/images/"
+  const imagePath = "/images/";
 
   switch (index) {
     case 0:

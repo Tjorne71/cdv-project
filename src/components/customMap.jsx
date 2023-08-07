@@ -9,16 +9,18 @@ import { dataMapper } from "@/util/dataMapper";
 import ColorLegend from "@/components/colorLegend";
 import DataSourceModal from "@/components/dataSourceModal";
 import CustomSwitch from "./customSwitch";
-import {monthToTextLong} from "@/util/monthFormat"
-import {fireSizeToValue, fireSizeToSentenceWithImages} from "@/util/fireSize.js"
-import {stateNameToShorthand} from "@/util/stateNameShortHand"
+import { monthToTextLong } from "@/util/monthFormat";
+import { fireSizeToValue, fireSizeToSentenceWithImages } from "@/util/fireSize.js";
+import { stateNameToShorthand } from "@/util/stateNameShortHand";
 import StateText from "./stateText";
-
+import SearchField from "@/components/searchField";
 
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
   const usData = countiesUs;
   const [showStatesLabels, setShowStatesLabels] = useState(false);
   const counties = feature(usData, usData.objects.counties);
+  const countiesNames = counties.features.map((county) => county.properties.name)
+  const uniqueCountiesNames = [...new Set(countiesNames)];
   const wildfireData = dataMapper(wildfireJson, counties);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -35,7 +37,16 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
 
   function countyClicked(county, fireSize) {
     setFocusCounty(county.properties.name);
-    setFireSentence(fireSizeToSentenceWithImages(fireSize).sentence);
+    setFireSentence(fireSizeToSentenceWithImages(fireSize));
+    setFireTotal(Math.round(fireSize * 100) / 100);
+    setIsSentenceVisible(true);
+  }
+
+  function countySearched(county) {
+    const fire = focusWildFireData.filter((fire) => fire.county.properties.name == county)
+    const fireSize = fire[0].fireSize ?? 0
+    setFocusCounty(county);
+    setFireSentence(fireSizeToSentenceWithImages(fireSize));
     setFireTotal(Math.round(fireSize * 100) / 100);
     setIsSentenceVisible(true);
   }
@@ -45,8 +56,11 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   }
 
   return (
-    <main className="w-full h-full flex flex-col justify-center">
-      <div className="flex flex-row font-Montserrat text-xs items-center">
+    <main className="w-full h-full flex flex-col justify-center relative">
+      <div className="absolute top-4 right-4 w-96">
+        <SearchField values={uniqueCountiesNames} onChange={countySearched}/>
+      </div>
+      <div className="flex flex-row font-Montserrat text-xs items-center mt-1">
         <CustomSwitch onChange={onShowStatesLabelsChange} state={showStatesLabels} />
         <p
           onClick={() => {
@@ -75,9 +89,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
               const stateFeature = feature(usData, state);
               const centroid = geoPath.centroid(stateFeature);
               if (!isNaN(centroid[0]) && !isNaN(centroid[1])) {
-                return (
-                  <StateText key={state.id} x={centroid[0]} y={centroid[1]} stateText={stateNameToShorthand[state.properties.name]}/>
-                );
+                return <StateText key={state.id} x={centroid[0]} y={centroid[1]} stateText={stateNameToShorthand[state.properties.name]} />;
               }
             })}
         </g>
@@ -92,7 +104,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
         <a href="#" onClick={handleOpen} className="text-sm underline hover:text-gray-300 transition-all duration-500 ease-in-out w-full text-right">
           Data Source
         </a>
-        <DataSourceModal open={open} onClose={handleClose}/>
+        <DataSourceModal open={open} onClose={handleClose} />
       </div>
     </main>
   );

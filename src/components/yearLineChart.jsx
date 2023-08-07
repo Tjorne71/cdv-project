@@ -44,6 +44,14 @@ export default function YearLineChart({ height, width, focusYear, focusMonth, on
 
   return (
     <svg height={height} width={width}>
+      {yScale.ticks(5).map((max) => (
+        <g transform={`translate(0,${yScale(max)})`} className="text-gray-400" key={max}>
+          <line x1={margin.left} x2={width - margin.right} stroke="currentColor" strokeDasharray="1,3" />
+          <text alignmentBaseline="middle" className="text-[10px]" fill="currentColor" style={{ pointerEvents: "none" }}>
+            {max}
+          </text>
+        </g>
+      ))}
       {years.map((year) => {
         const isFocusYear = year == parseInt(focusYear);
         return (
