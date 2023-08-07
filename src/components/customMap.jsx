@@ -46,11 +46,6 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   function countySearched(county) {
     const dataToLookIn = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
     const fire = dataToLookIn.find((fireData) => fireData.county && fireData.county.properties && fireData.county.properties.name === county);
-
-    if (!fire) {
-      console.log("No fire data found for county:", county);
-      return;
-    }
     let fireSize = 0;
     if (fire) {
       fireSize = fire.fireSize;
