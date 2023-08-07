@@ -18,6 +18,7 @@ import SearchField from "@/components/searchField";
 export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
   const usData = countiesUs;
   const [showStatesLabels, setShowStatesLabels] = useState(false);
+  
   const counties = feature(usData, usData.objects.counties);
   const countiesNames = counties.features.map((county) => county.properties.name);
   const uniqueCountiesNames = [...new Set(countiesNames)];
@@ -43,23 +44,21 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   }
 
   function countySearched(county) {
-    try {
-      const fire = focusWildFireData.filter((fire) => {
-        if(fire.county.properties.name == county) {
-          return fire.fireSize
-        }
-      });
-      let fireSize = 0
-      if(fire.length != 0) {
-        fireSize = fire[0].fireSize
-      }
-      setFocusCounty(county);
-      setFireSentence(fireSizeToSentenceWithImages(fireSize));
-      setFireTotal(Math.round(fireSize * 100) / 100);
-      setIsSentenceVisible(true);
-    } catch (error) {
-      console.log(error);
+    const dataToLookIn = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
+    const fire = dataToLookIn.find((fireData) => fireData.county && fireData.county.properties && fireData.county.properties.name === county);
+
+    if (!fire) {
+      console.log("No fire data found for county:", county);
+      return;
     }
+    let fireSize = 0;
+    if (fire) {
+      fireSize = fire.fireSize;
+    }
+    setFocusCounty(county);
+    setFireSentence(fireSizeToSentenceWithImages(fireSize));
+    setFireTotal(Math.round(fireSize * 100) / 100);
+    setIsSentenceVisible(true);
   }
 
   function onShowStatesLabelsChange() {
