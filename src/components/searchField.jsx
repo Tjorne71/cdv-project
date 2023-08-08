@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { getStateFromCountyId } from "@/util/stateFipsToName";
 
 const customTheme = createTheme({
   components: {
@@ -34,31 +36,44 @@ const customTheme = createTheme({
 });
 
 export default function SearchField({ values, onChange }) {
-  const handleValueSelect = (event, newValue) => {
-    if (newValue) {
-      const lowercaseValues = values.map((value) => value.toLowerCase());
-      const lowercaseNewValue = newValue.toLowerCase();
+  const listOfCounties = values.filter((val) => getStateFromCountyId(val.id) != undefined);
 
-      if (lowercaseValues.includes(lowercaseNewValue)) {
-        const searchresult = values.filter((value) => value.toLowerCase() == newValue.toLowerCase());
-        onChange(searchresult[0]);
-      } else {
-        alert('No matching county found.');
-      }
+  function handleValueSelect(_, newValue) {
+    if (newValue) {
+      onChange(newValue.value);
     }
-  };
+  }
 
   return (
     <ThemeProvider theme={customTheme}>
       <Autocomplete
-        freeSolo
+        autoHighlight
         id="free-solo-2-demo"
         disableClearable
         selectOnFocus
         clearOnBlur
-        groupBy={(option) => option.charAt(0)}
-        options={values.sort()}
+        options={listOfCounties
+          .sort((a, b) => {
+            if (a.id < b.id) {
+              return -1;
+            }
+            if (a.id > b.id) {
+              return 1;
+            }
+            return 0;
+          })
+          .map((option) => ({
+            label: `${option.properties.name} ${option.id}, ${getStateFromCountyId(option.id)}`,
+            value: option,
+            group: getStateFromCountyId(option.id),
+          }))}
+        groupBy={(option) => option.group}
         onChange={handleValueSelect}
+        renderOption={(props, option) => (
+          <Box component="li" {...props}>
+            {option.label}
+          </Box>
+        )}
         renderInput={(params) => (
           <TextField
             {...params}

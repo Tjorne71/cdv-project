@@ -20,8 +20,6 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   const [showStatesLabels, setShowStatesLabels] = useState(false);
   
   const counties = feature(usData, usData.objects.counties);
-  const countiesNames = counties.features.map((county) => county.properties.name);
-  const uniqueCountiesNames = [...new Set(countiesNames)];
   const wildfireData = dataMapper(wildfireJson, counties);
   const focusWildFireData = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
   const [open, setOpen] = React.useState(false);
@@ -45,15 +43,12 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
 
   function countySearched(county) {
     const dataToLookIn = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
-    const fire = dataToLookIn.find((fireData) => fireData.county && fireData.county.properties && fireData.county.properties.name === county);
+    const fire = dataToLookIn.find((fireData) => fireData.county && fireData.county.properties && fireData.county.properties.name === county.properties.name);
     let fireSize = 0;
     if (fire) {
       fireSize = fire.fireSize;
     }
-    setFocusCounty(county);
-    setFireSentence(fireSizeToSentenceWithImages(fireSize));
-    setFireTotal(Math.round(fireSize * 100) / 100);
-    setIsSentenceVisible(true);
+    countyClicked(county, fireSize);
   }
 
   function onShowStatesLabelsChange() {
@@ -63,7 +58,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   return (
     <main className="w-full h-full flex flex-col justify-center relative">
       <div className="absolute top-4 right-4 w-96">
-        <SearchField values={uniqueCountiesNames} onChange={countySearched} />
+        <SearchField values={counties.features} onChange={countySearched} />
       </div>
       <div className="flex flex-row font-Montserrat text-xs items-center mt-1">
         <CustomSwitch onChange={onShowStatesLabelsChange} state={showStatesLabels} />

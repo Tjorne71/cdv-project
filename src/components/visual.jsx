@@ -11,7 +11,6 @@ import { monthToTextLong } from "@/util/monthFormat";
 import InfoIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import ThreeBoxLayout from "@/layouts/threeBoxLayout";
 import ImageTip from "./imageTip";
 
 export default function Visual() {
