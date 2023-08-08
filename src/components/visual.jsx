@@ -114,7 +114,7 @@ export default function Visual() {
           </b>{" "}
           <br />
           <br />
-          <span className="text-xl">Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. Join us on a quest for understanding and action to protect our landscapes from this growing threat.</span>
+          <span className="text-xl">Uncover the connections between rising temperatures, droughts, and increased wildfire incidents. Join us on our quest towards understanding and taking proactive steps to protect our ecosystems from this emerging threat.</span>
         </p>
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
