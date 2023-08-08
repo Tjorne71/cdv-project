@@ -1,6 +1,8 @@
 # Running Inferno Across America  - Readme
 
-This document provides a step-by-step guide on how to run our React project built with Next.js. Make sure you have the necessary software installed before proceeding.
+This document provides a step-by-step guide on how to locally run our React project built with Next.js. Make sure you have the necessary software installed before proceeding.
+
+Alternatively, the project is live on a Vercel server and can be accessed at [Inferno Across America](https://cdv-project.vercel.app)
 
 ## Prerequisites
 
