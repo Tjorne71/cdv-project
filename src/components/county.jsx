@@ -15,7 +15,7 @@ export default function County({ d, county, color, countyClicked, fireSize, isFo
     <>
       <motion.path
         stroke={`${isFocus ? "#F9F871" : "black"}`}
-        strokeWidth={`${isFocus ? '2' : `${hover ? "1" : "0.1"}`}`}
+        strokeWidth={`${hover || isFocus ? "1" : "0.1"}`}
         fill={currentColor}
         d={d}
         onMouseLeave={() => {
