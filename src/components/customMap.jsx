@@ -15,10 +15,10 @@ import { stateNameToShorthand } from "@/util/stateNameShortHand";
 import StateText from "./stateText";
 import SearchField from "@/components/searchField";
 
-export default function CustomMap({ focusYear, focusMonth, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
+export default function CustomMap({ focusYear, focusMonth, focusCounty, height, width, setFocusCounty, setFireSentence, setFireTotal, setIsSentenceVisible }) {
   const usData = countiesUs;
   const [showStatesLabels, setShowStatesLabels] = useState(false);
-  
+
   const counties = feature(usData, usData.objects.counties);
   const wildfireData = dataMapper(wildfireJson, counties);
   const focusWildFireData = wildfireData.filter((fire) => fire.month == focusMonth && fire.year == focusYear);
@@ -35,7 +35,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
   const reds = d3.scaleSequential().domain([1, 8]).interpolator(d3.interpolateReds);
 
   function countyClicked(county, fireSize) {
-    setFocusCounty(county.properties.name);
+    setFocusCounty(county);
     setFireSentence(fireSizeToSentenceWithImages(fireSize));
     setFireTotal(Math.round(fireSize * 100) / 100);
     setIsSentenceVisible(true);
@@ -93,6 +93,7 @@ export default function CustomMap({ focusYear, focusMonth, height, width, setFoc
               }
             })}
         </g>
+        {focusCounty && <County key={"focus"} color={"transparent"} d={geoPath(focusCounty)} county={focusCounty} countyClicked={countyClicked} fireSize={0} isFocus={true} />}
       </svg>
       <div className="flex ml-6 mr-6 mb-4 justify-between items-end">
         <span className="text-sm font-bold font-Montserrat w-full">

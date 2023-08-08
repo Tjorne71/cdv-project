@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion"
 
-export default function County({ d, county, color, countyClicked, fireSize}) {
+export default function County({ d, county, color, countyClicked, fireSize, isFocus}) {
   const [hover, setHover] = useState(false);
   const [currentColor, setCurrentColor] = useState(color);
 
@@ -14,8 +14,8 @@ export default function County({ d, county, color, countyClicked, fireSize}) {
   return (
     <>
       <motion.path
-        stroke="black"
-        strokeWidth={`${hover ? "1" : "0.1"}`}
+        stroke={`${isFocus ? "#F9F871" : "black"}`}
+        strokeWidth={`${isFocus ? '2' : `${hover ? "1" : "0.1"}`}`}
         fill={currentColor}
         d={d}
         onMouseLeave={() => {

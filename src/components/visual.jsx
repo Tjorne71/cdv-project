@@ -17,9 +17,9 @@ export default function Visual() {
   const [focusMonth, setFocusMonth] = useState(7);
   const [focusYear, setFocusYear] = useState(2010);
   const [isPlayingMonth, setIsPlayingMonth] = useState(false);
-  const [focusCounty, setFocusCounty] = useState("Los Angeles");
+  const [focusCounty, setFocusCounty] = useState(null);
   const [fireSentence, setFireSentence] = useState(null);
-  const [fireTotal, setFireTotal] = useState(14705.8);
+  const [fireTotal, setFireTotal] = useState(0);
   const [isSentenceVisible, setIsSentenceVisible] = useState(false);
   const [showYearlyGraph, setIsShowYearlyGraph] = useState(false);
   const yearlyComparrisionInfoText = "Each line represents a year, that indicates how many acres were burned per month in the entirety of the US.";
@@ -37,10 +37,12 @@ export default function Visual() {
   }
 
   function onMonthChange(value) {
+    setIsSentenceVisible(false);
     setFocusMonth(value);
   }
 
   function onYearChange(value) {
+    setIsSentenceVisible(false);
     setFocusYear(value);
   }
 
@@ -52,7 +54,7 @@ export default function Visual() {
     <div className="max-w-[1400px] font-Montserrat text-white flex flex-row mx-auto relative">
       <div className="flex flex-col justify-between w-4/7 mr-2">
         <div className="text-2xl bg-[#3D5E70] h-3/5 w-full flex items-center justify-center min-w-[830px]">
-          <CustomMap focusMonth={focusMonth} focusYear={focusYear} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
+          <CustomMap focusMonth={focusMonth} focusYear={focusYear} focusCounty={focusCounty} setFocusCounty={setFocusCounty} setFireSentence={setFireSentence} setFireTotal={setFireTotal} setIsSentenceVisible={setIsSentenceVisible} height={500} width={850} />
         </div>
         <div className="text-2xl p-4 bg-[#3D5E70] h-2/5 w-full flex-col flex items-center justify-center mt-2">
           <div className="flex justify-between w-full">
@@ -117,7 +119,7 @@ export default function Visual() {
         <hr className="h-[2px] bg-white"></hr>
         <div className="mt-auto">
           <h2 className="mb-4 bg-[#3b5665] p-3 text-lg">
-            {isSentenceVisible ? generateCompleteFireSentence(focusMonth, focusYear, focusCounty, fireTotal, fireSentence.sentence) : "Click on a county too see county specific fires."} {fireSentence != null && fireSentence?.image != "" && <ImageTip imageUrl={fireSentence.image} sentence={fireSentence.sentence} />}
+            {isSentenceVisible ? generateCompleteFireSentence(focusMonth, focusYear, focusCounty.properties.name, fireTotal, fireSentence.sentence) : "Click on a county too see county specific fires."} {fireSentence != null && fireSentence?.image != "" && <ImageTip imageUrl={fireSentence.image} sentence={fireSentence.sentence} />}
           </h2>
           {showYearlyGraph ? (
             <>
