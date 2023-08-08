@@ -55,7 +55,7 @@ If you encounter any issues during the installation or running process, please r
 
 ## Conclusion
 
-Congratulations! You've successfully set up and run your React project using Next.js.
+Congratulations! You've successfully set up and runned our React project using Next.js.
 
 For more information, visit the official [Next.js documentation](https://nextjs.org/docs) for in-depth guidance.
 
