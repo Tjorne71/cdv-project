@@ -1,10 +1,10 @@
-# Running Inferno Across America  - Readme
+# The project is live on a Vercel server and can be accessed at [Inferno Across America](https://cdv-project.vercel.app)
+
+## Running Inferno Across America  - Readme
 
 This document provides a step-by-step guide on how to locally run our React project built with Next.js. Make sure you have the necessary software installed before proceeding.
 
-Alternatively, the project is live on a Vercel server and can be accessed at [Inferno Across America](https://cdv-project.vercel.app)
-
-## Prerequisites
+### Prerequisites
 
 Before you begin, ensure that you have the following software installed on your system:
 
@@ -12,7 +12,7 @@ Before you begin, ensure that you have the following software installed on your 
 
 2. **npm** (Node Package Manager): npm comes with Node.js installation. It's used to manage dependencies and packages. You can update npm by running `npm install -g npm`.
 
-## Getting Started
+### Getting Started
 
 Follow these steps to run the React project using Next.js:
 
@@ -44,18 +44,18 @@ Follow these steps to run the React project using Next.js:
 
 5. **Stopping the Development Server**: To stop the development server, press `Ctrl + C` or `control + C` in your terminal.
 
-## Additional Commands
+### Additional Commands
 
 Here are some additional commands you might find useful:
 
 - `npm run build`: Builds the production-ready version of the project.
 - `npm start`: Starts the production server after you've built the project.
 
-## Troubleshooting
+### Troubleshooting
 
 If you encounter any issues during the installation or running process, please refer to the official Next.js documentation or seek help on relevant forums.
 
-## Conclusion
+### Conclusion
 
 Congratulations! You've successfully set up and runned our React project using Next.js.
 
