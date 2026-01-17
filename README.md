@@ -1,64 +1,57 @@
-# The project is live on a Vercel server and can be accessed at [Inferno Across America](https://cdv-project.vercel.app)
+# Inferno Across America: A Visual Chronicle of Wildfires
 
-## Running Inferno Across America  - Readme
+[Web App is hosted at Vercel](https://cdv-project.vercel.app/)
 
-This document provides a step-by-step guide on how to locally run our React project built with Next.js. Make sure you have the necessary software installed before proceeding.
+An interactive data story that maps and charts U.S. wildfire activity from 1992–2015. The experience pairs a county-level choropleth with time-series visualizations so viewers can explore seasonal patterns, long-term change, and the climate questions behind the numbers.
 
-### Prerequisites
+## What this project is about
 
-Before you begin, ensure that you have the following software installed on your system:
+Inferno Across America is a visual chronicle of wildfire impact across the United States. It focuses on the scale of acres burned over time, letting users move through months and years to reveal where fires concentrate, when they peak, and how yearly totals evolve. The goal is to make the climate narrative tangible through direct, interactive exploration rather than static charts.
 
-1. **Node.js**: Next.js requires Node.js to run. Download and install it from the official [Node.js website](https://nodejs.org/).
+## Features
 
-2. **npm** (Node Package Manager): npm comes with Node.js installation. It's used to manage dependencies and packages. You can update npm by running `npm install -g npm`.
+- County-level wildfire map with color intensity for acres burned and a legend for quick comparison.
+- Clickable counties that surface a narrative sentence and contextual imagery when available.
+- Search to jump to a specific county and a toggle for state labels.
+- Time controls for month and year, plus an autoplay option to scan through months.
+- Two chart modes: yearly comparison of monthly patterns and long-term evolution of annual totals.
+- Built-in data source modal with citations for transparency.
 
-### Getting Started
+## Screenshots
 
-Follow these steps to run the React project using Next.js:
+![Hero view – map and charts](documentation/image.png)
 
-1. **Clone the Repository**: Clone the project repository to your local machine using Git. Open your terminal and run:
+## Data sources
 
-    ```bash
-    git clone https://github.com/Tjorne71/cdv-project.git
-    ```
+- Kaggle: 1.88 Million US Wildfires (FPA_FOD_20170508)  
+  https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires
+- Derived JSON used in the app:
+  - `src/data/FiresPerCountyMonthly.json`
+  - `src/data/FiresPerMonthUS.json`
+  - `src/data/counties-10m.json`
 
-2. **Navigate to Project Directory**: Use the `cd` command to move into the project directory:
+Citation: Short, Karen C. 2017. Spatial wildfire occurrence data for the United States, 1992–2015 [FPA_FOD_20170508]. 4th Edition. Fort Collins, CO: Forest Service Research Data Archive. https://doi.org/10.2737/RDS-2013-0009.4
 
-    ```bash
-    cd cdv-project
-    ```
+## Tech stack
 
-3. **Install Dependencies**: Install the project dependencies using npm. Run the following command in your terminal:
+- Next.js (App Router), React
+- D3 + TopoJSON for mapping and charting
+- Tailwind CSS + MUI for UI components
 
-    ```bash
-    npm install
-    ```
+## How to run
 
-4. **Run the Development Server**: Once the dependencies are installed, you can start the development server. Run:
+Prerequisite: Node.js 18+.
 
-    ```bash
-    npm run dev
-    ```
+```bash
+npm install
+npm run dev
+```
 
-    This command will compile the project and start a local development server. Open your browser and visit `http://localhost:3000` to see your project in action.
+Then open http://localhost:3000.
 
-5. **Stopping the Development Server**: To stop the development server, press `Ctrl + C` or `control + C` in your terminal.
+Optional:
 
-### Additional Commands
-
-Here are some additional commands you might find useful:
-
-- `npm run build`: Builds the production-ready version of the project.
-- `npm start`: Starts the production server after you've built the project.
-
-### Troubleshooting
-
-If you encounter any issues during the installation or running process, please refer to the official Next.js documentation or seek help on relevant forums.
-
-### Conclusion
-
-Congratulations! You've successfully set up and runned our React project using Next.js.
-
-For more information, visit the official [Next.js documentation](https://nextjs.org/docs) for in-depth guidance.
-
-Happy coding!
+```bash
+npm run build
+npm start
+```
